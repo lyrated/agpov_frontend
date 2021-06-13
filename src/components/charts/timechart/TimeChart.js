@@ -8,7 +8,7 @@ function TimeChart() {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:9000/api/years?size=10000&gender=1')
+    fetch('http://localhost:9000/api/years?size=55000&gender=1')
       .then(res => res.json())
       .then(setData)
       .then(() => setLoading(false))
