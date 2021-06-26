@@ -39,7 +39,6 @@ function BarChart({ data }) {
         .style('opacity', 0)
         .style('color', 'black');
 
-      console.log(data);
       let chart = d3.select('#time-chart').append('svg')
         .attr('width', width + margin.right + margin.left)
         .attr('height', height + margin.top + margin.bottom)
