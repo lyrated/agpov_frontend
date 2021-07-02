@@ -6,23 +6,19 @@ function BarChart({ data }) {
     if (data != null) {
       data.splice(0, 9);
 
-      let margin = { top: 10, right: 0, bottom: 30, left: 21 },
+      let margin = { top: 30, right: 0, bottom: 30, left: 21 },
         height = 500 - margin.top - margin.bottom,
         width = 900 - margin.right - margin.left;
 
       let yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, (d) => {
-          return d.y;
-        })])
+        .domain([0, 50])
         .range([0, height]),
         colors = d3.scaleLinear()
           .domain([0, data.length - 1])
           .range(['#D93B63', '#90CEA1']);
 
       let yAxisValues = d3.scaleLinear()
-        .domain([0, d3.max(data, (d) => {
-          return d.y;
-        })])
+        .domain([0, 50])
         .range([height, 0]),
         yAxisTicks = d3.axisLeft(yAxisValues).tickValues(yScale.ticks(10).concat(yScale.domain()));
 

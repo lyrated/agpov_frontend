@@ -5,7 +5,7 @@ function Header() {
   return (
     <header className="row m-0">
       <div className="col-12 col-lg-6 p-0">
-        <a href="/"><h1>Gender Behind The Scenes</h1></a>
+        <a href="/"><h1>A gendered point of view</h1></a>
         <p className="subtitle">Visualizing gender distribution in the movie industry</p>
       </div>
 
