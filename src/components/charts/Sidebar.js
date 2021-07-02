@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TimeChart from './timechart/TimeChart';
-import GenresDeparmentsChart from './GenresDepartmentsChart';
+import GenresDeparmentsChart from './genresdepartmentschart/GenresDepartmentsChart';
 import ProfitChart from './profitchart/ProfitChart';
 
 function Sidebar({ setChart }) {
