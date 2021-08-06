@@ -23,9 +23,9 @@ function ChartsLayout() {
           <p>SOME INFO TEXT</p>
         </section>
         <Router>
-            <Route path="/time" component={TimeChart} />
-            <Route path="/genres" component={GenresDeparmentsChart} />
-            <Route path="/profit" component={ProfitChart} />
+          <Route path="/time" component={TimeChart} />
+          <Route path="/genres" component={GenresDeparmentsChart} />
+          <Route path="/profit" component={ProfitChart} />
         </Router>
       </div>
     </div>
