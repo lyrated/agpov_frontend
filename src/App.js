@@ -6,7 +6,6 @@ import {
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import Home from './components/Home';
-import WorldMap from './components/worldmap/WorldMap';
 import ChartsLayout from './components/charts/ChartsLayout';
 import './App.css';
 
@@ -16,8 +15,9 @@ function App() {
       <div className="App">
         <Header />
         <Route path="/" component={Home} exact />
-        <Route path="/charts" component={ChartsLayout} />
-        <Route path="/world-map" component={WorldMap} />
+        <Route path="/time" component={ChartsLayout} />
+        <Route path="/genres" component={ChartsLayout} />
+        <Route path="/profit" component={ChartsLayout} />
         <Footer />
       </div>
     </Router>

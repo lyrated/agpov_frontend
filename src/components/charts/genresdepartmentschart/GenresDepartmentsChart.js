@@ -9,7 +9,7 @@ function GenresDeparmentsChart() {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:9000/api/genres-departments?size=100000&dataset=crew')
+    fetch('http://localhost:9000/api/genres-departments?size=10000&dataset=crew&time=1995')
       .then(res => res.json())
       .then(setData)
       .then(() => setLoading(false))

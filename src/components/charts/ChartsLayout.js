@@ -1,22 +1,32 @@
-import { React, useState } from 'react';
+import { React } from 'react';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom';
 
 import Sidebar from './Sidebar';
-import WorldMap from '../worldmap/WorldMap';
+
+import TimeChart from './timechart/TimeChart';
+import GenresDeparmentsChart from './genresdepartmentschart/GenresDepartmentsChart';
+import ProfitChart from './profitchart/ProfitChart';
 
 function ChartsLayout() {
-  const [chart, setChart] = useState(<WorldMap />);
 
   return (
     <div className="row">
       <div className="col">
-        <Sidebar setChart={setChart} />
+        <Sidebar />
       </div>
 
       <div className="col-12 col-xl-9 order-xl-first">
         <section id="info-text">
           <p>SOME INFO TEXT</p>
         </section>
-        {chart}
+        <Router>
+            <Route path="/time" component={TimeChart} />
+            <Route path="/genres" component={GenresDeparmentsChart} />
+            <Route path="/profit" component={ProfitChart} />
+        </Router>
       </div>
     </div>
   );

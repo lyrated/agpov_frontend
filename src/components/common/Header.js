@@ -10,17 +10,20 @@ function Header() {
       </div>
 
       {/* Navigation */}
-      <div className="col p-0 my-auto">
+      <div className="col p-0">
         <nav className="navbar navbar-expand-md px-0">
           <ul className="navbar-nav ml-0 ml-md-auto">
             <li className="nav-item">
               <NavLink exact to="/" activeClassName="active" className="nav-link">Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/charts" activeClassName="active" className="nav-link">Charts</NavLink>
+              <NavLink to="/time" activeClassName="active" className="nav-link">Distribution over time</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/world-map" activeClassName="active" className="nav-link">World Map</NavLink>
+              <NavLink to="/genres" activeClassName="active" className="nav-link">Genres &amp; Departments</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/profit" activeClassName="active" className="nav-link">Budget &amp; Revenue</NavLink>
             </li>
           </ul>
         </nav>
