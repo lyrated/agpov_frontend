@@ -86,7 +86,7 @@ footer p {
 h2 {
   font-weight: bold;
   font-size: 1.2rem;
-  color: var(--pink);
+  color: var(--green-light);
 }
 
 section {
@@ -94,6 +94,16 @@ section {
   border-radius: 10px;
   padding: 1.5rem;
   margin: 1.5rem 0;
+}
+
+.btn.btn-primary {
+  background-color: var(--pink);
+  border: none;
+  transition: 0.5s;
+}
+
+.btn.btn-primary:hover, .btn.btn-primary:focus, .btn.btn-primary:active {
+  background-color: var(--pink-light);
 }
 
 #sidebar {

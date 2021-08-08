@@ -4,8 +4,6 @@ import * as d3 from 'd3';
 function BarChart({ data }) {
   useEffect(() => {
     if (data != null) {
-      data.splice(0, 9);
-
       let margin = { top: 30, right: 0, bottom: 30, left: 21 },
         height = 500 - margin.top - margin.bottom,
         width = 900 - margin.right - margin.left;
