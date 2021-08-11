@@ -1,6 +1,6 @@
 import { React, useState, useCallback } from 'react';
 
-function TimeChartSidebar({ url, setUrl }) {
+function TimeChartSidebar({ setUrl }) {
   // constants
   const START = 1912,
     END = 2021,
@@ -22,6 +22,28 @@ function TimeChartSidebar({ url, setUrl }) {
   const [genre, setGenre] = useState('all');
   const [dep, setDep] = useState('all');
   const [cat, setCat] = useState('genres');
+  const [selected, setSelected] = useState('none');
+
+  const handleCatChange = e => {
+    setCat(e.target.value);
+    setSelected(e.target.value);
+  }
+
+  const handleGenreChange = e => {
+    setGenre(e.target.value);
+    if (e.target.value !== 'all') {
+      setSelected('none');
+      setCat('none');
+    }
+  }
+
+  const handleDepChange = e => {
+    setDep(e.target.value);
+    if (e.target.value !== 'all') {
+      setSelected('none');
+      setCat('none');
+    }
+  }
 
   const handleInputChange = useCallback(e => {
     setUrl('start=' + start + '&end=' + end + '&genre=' + genre + '&dep=' + dep + '&category=' + cat);
@@ -52,34 +74,16 @@ function TimeChartSidebar({ url, setUrl }) {
         </select>
       </div>
 
-      <div className="py-2" onChange={e => setCat(e.target.value)}>
-        <h2>Show category:</h2>
-        <div className="form-check mb-1">
-          <input className="form-check-input" type="radio" name="cat" id="catGenres" value="genres"
-            disabled={!(genre === 'all' && dep === 'all')} defaultChecked />
-          <label className="form-check-label" htmlFor="catGenres">
-            Genres
-          </label>
-        </div>
-        <div className="form-check">
-          <input className="form-check-input" type="radio" name="cat" id="catDeps" value="departments"
-            disabled={!(genre === 'all' && dep === 'all')} />
-          <label className="form-check-label" htmlFor="catDeps">
-            Departments
-          </label>
-        </div>
-      </div>
-
       <div className="py-2">
         <h2>Genres:</h2>
-        <select className="custom-select" name="genre" defaultValue={'all'} onChange={e => setGenre(e.target.value)}>
+        <select className="custom-select" name="genre" defaultValue={'all'} onChange={handleGenreChange}>
           {genresOptions}
         </select>
       </div>
 
       <div className="py-2">
         <h2>Departments:</h2>
-        <select className="custom-select" name="dep" defaultValue={'all'} onChange={e => setDep(e.target.value)}>
+        <select className="custom-select" name="dep" defaultValue={'all'} onChange={handleDepChange}>
           <option value="all">All</option>
           <option value="acting">Acting</option>
           <option value="writing">Writing</option>
@@ -88,9 +92,18 @@ function TimeChartSidebar({ url, setUrl }) {
         </select>
       </div>
 
-      <p>{url}</p>
-      <button className="btn btn-primary mt-2 w-100"
-        onClick={handleInputChange}>Apply</button>
+      <div className="pt-2">
+        <h2>Show category:</h2>
+        <select className="custom-select" value={selected} name="cat" onChange={handleCatChange}>
+          <option value="none">None</option>
+          <option value="genres" disabled={genre !== 'all' || dep !== 'all'}>Genres</option>
+          <option value="departments" disabled={genre !== 'all' || dep !== 'all'}>Departments</option>
+        </select>
+        <p className="small">Category can only be selected if 'All' is selected in above filters.</p>
+      </div>
+
+      <button className="btn btn-primary w-100"
+        onClick={handleInputChange}>Apply filters</button>
     </>
   );
 }

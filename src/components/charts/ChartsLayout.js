@@ -11,14 +11,14 @@ import GenresDeparmentsChart from './genresdepartmentschart/GenresDepartmentsCha
 import ProfitChart from './profitchart/ProfitChart';
 
 function ChartsLayout() {
-  const [url, setUrl] = useState('');
+  const [timeUrl, setTimeUrl] = useState('&start=1912&end=2021&genre=all&dep=all&category=none');
 
   return (
     <div className="row">
       <div className="col">
         <section id="sidebar">
           <Router>
-            <Route path="/time" render={(props) => <TimeChartSidebar {...props} url={url} setUrl={setUrl} />} />
+            <Route path="/time" render={() => <TimeChartSidebar setUrl={setTimeUrl} />} />
             {/* <Route path="/genres" component={GenresDeparmentsChart} />
             <Route path="/profit" component={ProfitChart} /> */}
           </Router>
@@ -30,7 +30,7 @@ function ChartsLayout() {
           <p>SOME INFO TEXT</p>
         </section>
         <Router>
-          <Route path="/time" render={(props) => <TimeChart {...props} url={url} />} />
+          <Route path="/time" render={() => <TimeChart url={timeUrl} />} />
           <Route path="/genres" component={GenresDeparmentsChart} />
           <Route path="/profit" component={ProfitChart} />
         </Router>

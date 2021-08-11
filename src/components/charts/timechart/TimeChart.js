@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
+import BarChartStacked from './BarChartStacked';
 
 function TimeChart({ url }) {
   const [data, setData] = useState(null);
@@ -19,12 +20,21 @@ function TimeChart({ url }) {
     return <pre>{JSON.stringify(error, null, 2)}</pre>;
   }
 
-  return (
-    <section id="charts">
-      {loading && <p>LOADING...</p>}
-      {!loading && <BarChart data={data} />}
-    </section>
-  );
+  if (!url.includes('category=none')) {
+    return (
+      <section id="charts">
+        {loading && <p>LOADING...</p>}
+        {!loading && <BarChartStacked data={data} />}
+      </section>
+    );
+  } else {
+    return (
+      <section id="charts">
+        {loading && <p>LOADING...</p>}
+        {!loading && <BarChart data={data} />}
+      </section>
+    );
+  }
 }
 
 export default TimeChart;

@@ -1,0 +1,189 @@
+import React, { useEffect } from 'react';
+import * as d3 from 'd3';
+
+/**
+ * Stacked Bar Chart Code from https://observablehq.com/@d3/stacked-bar-chart
+ */
+function BarChartStacked(props) {
+  useEffect(() => {
+    if (props.data !== null && props.data.data) {
+      const data = props.data.data;
+      const columns = props.data.columns;
+
+      let margin = { top: 30, right: 30, bottom: 30, left: 40 },
+        height = 500 - margin.top - margin.bottom,
+        width = 900 - margin.right - margin.left;
+
+      let series = d3.stack()
+        .keys(columns.slice(1))(data)
+        .map(d => (d.forEach(v => v.key = d.key), d));
+
+      let x = d3.scaleBand()
+        .domain(data.map(d => d.name))
+        .range([margin.left, width - margin.right])
+        .padding(0.1);
+
+      let y = d3.scaleLinear()
+        .domain([0, 50])
+        .rangeRound([height - margin.bottom, margin.top]);
+
+      //   '#F8AAA0', '#EA7073', '#DE3F4C', '#CC3E55', '#B44167', '#B96481',  // reds
+      //   '#7662E4', '#9381FF', '#96A0ED', '#94B8DB', '#57A3C7', '#38A2BC',  // blues
+      //   '#3DA49B', '#42B398', '#4ED0A2', '#70FF8D',  // greens
+      //   '#F3A712', '#F9CD44', '#FFF275', '#FCD491'  // yellows
+      const colors = [
+        '#9381FF', '#7662E4', '#3DA49B', '#F3A712', '#F8AAA0',
+        '#DE3F4C', '#96A0ED', '#42B398', '#F9CD44', '#EA7073',
+        '#57A3C7', '#94B8DB', '#4ED0A2', '#FFF275', '#CC3E55',
+        '#B96481', '#38A2BC', '#70FF8D', '#FCD491', '#B44167'
+      ];
+      let color = d3.scaleOrdinal()
+        .domain(series.map(d => d.key))
+        .range(colors)
+        .unknown("#ccc");
+
+      let xAxis = g => g
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(x)
+          .tickValues(x.domain().filter(function (d, i) {
+            return !(i % 5);
+          })));
+
+      let yAxis = g => g
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y).ticks(null, "s").tickFormat(d => d + '%'));
+
+      let formatValue = x => isNaN(x) ? "N/A" : x.toLocaleString("en");
+
+      let tooltip = d3.select('body')
+        .append('div')
+        .style('position', 'absolute')
+        .style('padding', '0 10px')
+        .style('background', '#F0F0FA')
+        .style('opacity', 0)
+        .style('color', 'black');
+
+      const svg = d3.select('#time-chart').append('svg')
+        .attr("viewBox", [0, 0, width, height + 10]);
+
+      svg.append("g")
+        .selectAll("g")
+        .data(series)
+        .join("g")
+        .attr("fill", d => color(d.key))
+        .selectAll("rect")
+        .data(d => d)
+        .join("rect")
+        .attr("x", (d, i) => x(d.data.name))
+        .attr("y", d => y(d[1]))
+        .attr("height", d => y(d[0]) - y(d[1]))
+        .attr("width", x.bandwidth())
+        // on mouseover event
+        .on('mouseover', (event, d) => {
+          d3.select(event.currentTarget)
+            .style('opacity', .8);
+          tooltip.transition().duration(200).style('opacity', 0.9);
+          tooltip.html(`${d.data.name}: ${d.key} - ${formatValue(d.data[d.key])}%`)
+            .style('left', (event.pageX - 35) + 'px')
+            .style('top', (event.pageY - 30) + 'px');
+        })
+        .on('mouseout', (event, d) => {
+          d3.select(event.currentTarget)
+            .style('opacity', 1);
+          tooltip.transition().duration(100).style('opacity', 0);
+        });
+
+      //guides
+      svg.append("g")
+        .call(xAxis);
+      svg.append('text')
+        .attr('x', width / 2)
+        .attr('y', height + 5)
+        .attr('fill', '#FDC170')
+        .style('font-size', '10pt')
+        .style('text-anchor', 'middle')
+        .text('years');
+
+      svg.append("g")
+        .call(yAxis);
+      svg.append('text')
+        .attr('x', 0)
+        .attr('y', 10)
+        .attr('fill', '#FDC170')
+        .style('font-size', '10pt')
+        .text('% of women from all credits');
+
+      // legend
+      const legend = columns.slice(2, Math.round(columns.length / 3) + 1);
+      // replace label for Actors to avoid confusion
+      let iActors = legend.indexOf('Actors');
+      if (iActors !== -1) {
+        legend[iActors] = 'Background Acting';
+      }
+      svg.selectAll('legend')
+        .data(legend).enter()
+        .append('rect')
+        .attr('fill', d => color(d))
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('x', width / 2)
+        .attr('y', (d, i) => (i * 20) + 10);
+      svg.selectAll('labels')
+        .data(legend).enter()
+        .append('text')
+        .attr('fill', 'white')
+        .attr('x', width / 2 + 15)
+        .attr('y', (d, i) => (i * 20) + 20)
+        .style('font-size', '12px')
+        .text(d => d);
+
+      const legend2 = columns.slice(Math.round(columns.length / 3) + 1, Math.round(columns.length / 3) * 2 + 1);
+      // replace Costume & Make Up to shorten it
+      let iCM = legend2.indexOf('Costume & Make-Up');
+      if (iCM !== -1) {
+        legend2[iCM] = 'Costume/Make-Up';
+      }
+      svg.selectAll('legend')
+        .data(legend2).enter()
+        .append('rect')
+        .attr('fill', d => color(d))
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('x', width / 2 + 125)
+        .attr('y', (d, i) => (i * 20) + 10);
+      svg.selectAll('labels')
+        .data(legend2).enter()
+        .append('text')
+        .attr('fill', 'white')
+        .attr('x', width / 2 + 15 + 125)
+        .attr('y', (d, i) => (i * 20) + 20)
+        .style('font-size', '12px')
+        .text(d => d);
+      
+      const legend3 = columns.slice(Math.round(columns.length / 3) * 2 + 1);
+      svg.selectAll('legend')
+        .data(legend3).enter()
+        .append('rect')
+        .attr('fill', d => color(d))
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('x', width / 2 + 250)
+        .attr('y', (d, i) => (i * 20) + 10);
+      svg.selectAll('labels')
+        .data(legend3).enter()
+        .append('text')
+        .attr('fill', 'white')
+        .attr('width', 100)
+        .attr('x', width / 2 + 15 + 250)
+        .attr('y', (d, i) => (i * 20) + 20)
+        .style('font-size', '12px')
+        .text(d => d);
+    }
+  });
+
+  return (
+    <div id="time-chart" className="diagram"></div>
+  );
+}
+
+export default BarChartStacked;
