@@ -20,40 +20,36 @@ function BarChartStacked(props) {
 
       let x = d3.scaleBand()
         .domain(data.map(d => d.name))
-        .range([margin.left, width - margin.right])
+        .range([0, width])
         .padding(0.1);
 
       let y = d3.scaleLinear()
         .domain([0, 50])
-        .rangeRound([height - margin.bottom, margin.top]);
+        .rangeRound([height, 0]);
 
-      //   '#F8AAA0', '#EA7073', '#DE3F4C', '#CC3E55', '#B44167', '#B96481',  // reds
-      //   '#7662E4', '#9381FF', '#96A0ED', '#94B8DB', '#57A3C7', '#38A2BC',  // blues
-      //   '#3DA49B', '#42B398', '#4ED0A2', '#70FF8D',  // greens
-      //   '#F3A712', '#F9CD44', '#FFF275', '#FCD491'  // yellows
       const colors = [
-        '#9381FF', '#7662E4', '#3DA49B', '#F3A712', '#F8AAA0',
-        '#DE3F4C', '#96A0ED', '#42B398', '#F9CD44', '#EA7073',
-        '#57A3C7', '#94B8DB', '#4ED0A2', '#FFF275', '#CC3E55',
-        '#B96481', '#38A2BC', '#70FF8D', '#FCD491', '#B44167'
+        '#9381FF', '#7662E4', '#3D948B', '#F3A712', '#FDAAA0',
+        '#DE3F4C', '#66A0ED', '#42C3A8', '#F9CD44', '#EA7073',
+        '#57A3C7', '#94B8DB', '#0EE0D2', '#FFF275', '#CC3E55',
+        '#B96481', '#08627C', '#FCD491', '#70FF8D', '#A42147'
       ];
       let color = d3.scaleOrdinal()
         .domain(series.map(d => d.key))
         .range(colors)
-        .unknown("#ccc");
+        .unknown('#ccc');
 
       let xAxis = g => g
-        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .attr('transform', `translate(${margin.left},${height + margin.top})`)
         .call(d3.axisBottom(x)
           .tickValues(x.domain().filter(function (d, i) {
             return !(i % 5);
           })));
 
       let yAxis = g => g
-        .attr("transform", `translate(${margin.left},0)`)
-        .call(d3.axisLeft(y).ticks(null, "s").tickFormat(d => d + '%'));
+        .attr('transform', `translate(${margin.left},${margin.top})`)
+        .call(d3.axisLeft(y).ticks(null, 's').tickFormat(d => d + '%'));
 
-      let formatValue = x => isNaN(x) ? "N/A" : x.toLocaleString("en");
+      let formatValue = x => isNaN(x) ? 'N/A' : x.toLocaleString('en');
 
       let tooltip = d3.select('body')
         .append('div')
@@ -64,28 +60,32 @@ function BarChartStacked(props) {
         .style('color', 'black');
 
       const svg = d3.select('#time-chart').append('svg')
-        .attr("viewBox", [0, 0, width, height + 10]);
+        .attr('viewBox',
+          [0, 0, width + margin.right + margin.left + 10, height + margin.top + margin.bottom + 10])
+        .call(zoom);
 
-      svg.append("g")
-        .selectAll("g")
+      const chart = svg.append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('class', 'bars')
+        .selectAll('g')
         .data(series)
-        .join("g")
-        .attr("fill", d => color(d.key))
-        .selectAll("rect")
+        .join('g')
+        .attr('fill', d => color(d.key))
+        .selectAll('rect')
         .data(d => d)
-        .join("rect")
-        .attr("x", (d, i) => x(d.data.name))
-        .attr("y", d => y(d[1]))
-        .attr("height", d => y(d[0]) - y(d[1]))
-        .attr("width", x.bandwidth())
+        .join('rect')
+        .attr('x', (d, i) => x(d.data.name))
+        .attr('y', height)
+        .attr('height', 0)
+        .attr('width', x.bandwidth())
         // on mouseover event
         .on('mouseover', (event, d) => {
           d3.select(event.currentTarget)
             .style('opacity', .8);
-          tooltip.transition().duration(200).style('opacity', 0.9);
+          tooltip.transition().duration(100).style('opacity', 0.9);
           tooltip.html(`${d.data.name}: ${d.key} - ${formatValue(d.data[d.key])}%`)
-            .style('left', (event.pageX - 35) + 'px')
-            .style('top', (event.pageY - 30) + 'px');
+            .style('left', (event.pageX - 50) + 'px')
+            .style('top', (event.pageY - 50) + 'px');
         })
         .on('mouseout', (event, d) => {
           d3.select(event.currentTarget)
@@ -93,22 +93,33 @@ function BarChartStacked(props) {
           tooltip.transition().duration(100).style('opacity', 0);
         });
 
+      // animation
+      chart.transition()
+        .attr('height', d => y(d[0]) - y(d[1]))
+        .attr('y', d => y(d[1]))
+        .duration(50)
+        .delay((d, i) => {
+          return i * 5
+        });
+
       //guides
-      svg.append("g")
+      svg.append('g')
+        .attr('class', 'x-axis')
         .call(xAxis);
       svg.append('text')
         .attr('x', width / 2)
-        .attr('y', height + 5)
+        .attr('y', height + margin.top + margin.bottom + 5)
         .attr('fill', '#FDC170')
         .style('font-size', '10pt')
         .style('text-anchor', 'middle')
         .text('years');
 
-      svg.append("g")
+      svg.append('g')
+        .attr('class', 'y-axis')
         .call(yAxis);
       svg.append('text')
         .attr('x', 0)
-        .attr('y', 10)
+        .attr('y', 15)
         .attr('fill', '#FDC170')
         .style('font-size', '10pt')
         .text('% of women from all credits');
@@ -126,13 +137,13 @@ function BarChartStacked(props) {
         .attr('fill', d => color(d))
         .attr('width', 10)
         .attr('height', 10)
-        .attr('x', width / 2)
+        .attr('x', width / 5 * 3)
         .attr('y', (d, i) => (i * 20) + 10);
       svg.selectAll('labels')
         .data(legend).enter()
         .append('text')
         .attr('fill', 'white')
-        .attr('x', width / 2 + 15)
+        .attr('x', width / 5 * 3 + 15)
         .attr('y', (d, i) => (i * 20) + 20)
         .style('font-size', '12px')
         .text(d => d);
@@ -149,17 +160,17 @@ function BarChartStacked(props) {
         .attr('fill', d => color(d))
         .attr('width', 10)
         .attr('height', 10)
-        .attr('x', width / 2 + 125)
+        .attr('x', width / 5 * 3 + 125)
         .attr('y', (d, i) => (i * 20) + 10);
       svg.selectAll('labels')
         .data(legend2).enter()
         .append('text')
         .attr('fill', 'white')
-        .attr('x', width / 2 + 15 + 125)
+        .attr('x', width / 5 * 3 + 15 + 125)
         .attr('y', (d, i) => (i * 20) + 20)
         .style('font-size', '12px')
         .text(d => d);
-      
+
       const legend3 = columns.slice(Math.round(columns.length / 3) * 2 + 1);
       svg.selectAll('legend')
         .data(legend3).enter()
@@ -167,17 +178,36 @@ function BarChartStacked(props) {
         .attr('fill', d => color(d))
         .attr('width', 10)
         .attr('height', 10)
-        .attr('x', width / 2 + 250)
+        .attr('x', width / 5 * 3 + 250)
         .attr('y', (d, i) => (i * 20) + 10);
       svg.selectAll('labels')
         .data(legend3).enter()
         .append('text')
         .attr('fill', 'white')
         .attr('width', 100)
-        .attr('x', width / 2 + 15 + 250)
+        .attr('x', width / 5 * 3 + 15 + 250)
         .attr('y', (d, i) => (i * 20) + 20)
         .style('font-size', '12px')
         .text(d => d);
+
+      /**
+       * Zoomable Bar Chart Code from https://observablehq.com/@d3/zoomable-bar-chart
+       */
+      function zoom(svg) {
+        const extent = [[margin.left, margin.top], [width, height]];
+
+        svg.call(d3.zoom()
+          .scaleExtent([1, 8])
+          .translateExtent(extent)
+          .extent(extent)
+          .on('zoom', zoomed));
+
+        function zoomed(event) {
+          x.range([0, width].map(d => event.transform.applyX(d)));
+          svg.selectAll('.bars rect').attr('x', d => x(d.data.name)).attr('width', x.bandwidth());
+          svg.selectAll('.x-axis').call(xAxis);
+        }
+      }
     }
   });
 

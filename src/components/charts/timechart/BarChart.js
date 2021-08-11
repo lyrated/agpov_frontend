@@ -8,27 +8,32 @@ function BarChart({ data }) {
         height = 500 - margin.top - margin.bottom,
         width = 900 - margin.right - margin.left;
 
-      let y = d3.scaleLinear()
-        .domain([0, 50])
-        .range([0, height]),
-        colors = d3.scaleLinear()
-          .domain([0, d3.max(data, d => d.y)])
-          .range(['#01B4E4', '#D40242']);
-
-      let yAxisValues = d3.scaleLinear()
-        .domain([0, 50])
-        .range([height, 0]),
-        yAxisTicks = d3.axisLeft(yAxisValues)
-          .tickValues(y.ticks(10).concat(y.domain()))
-          .tickFormat(d => d + '%');
-
       let x = d3.scaleBand()
         .domain(data.map(d => d.x))
-        .range([0, width]);
-      let xAxisTicks = d3.axisBottom(x)
-        .tickValues(x.domain().filter(function (d, i) {
-          return !(i % 5);
-        }));
+        .range([0, width])
+        .padding(0.1);
+
+      let y = d3.scaleLinear()
+        .domain([0, 50])
+        .rangeRound([0, height]);
+      let yAxisValues = d3.scaleLinear()
+        .domain([0, 50])
+        .rangeRound([height, 0]);
+
+      let colors = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.y)])
+        .range(['#01B4E4', '#D40242']);
+
+      let xAxis = g => g
+        .attr('transform', `translate(${margin.left},${height + margin.top})`)
+        .call(d3.axisBottom(x)
+          .tickValues(x.domain().filter(function (d, i) {
+            return !(i % 5);
+          })));
+
+      let yAxis = g => g
+        .attr('transform', `translate(${margin.left},${margin.top})`)
+        .call(d3.axisLeft(yAxisValues).ticks(null, 's').tickFormat(d => d + '%'));
 
       let tooltip = d3.select('body')
         .append('div')
@@ -38,36 +43,30 @@ function BarChart({ data }) {
         .style('opacity', 0)
         .style('color', 'black');
 
-      let chart = d3.select('#time-chart').append('svg')
-        .attr('width', width + margin.right + margin.left + 10)
-        .attr('height', height + margin.top + margin.bottom + 10)
-        .append('g')
+      const svg = d3.select('#time-chart').append('svg')
+        .attr('viewBox',
+          [0, 0, width + margin.right + margin.left + 10, height + margin.top + margin.bottom + 10])
+        .call(zoom);
+
+      const chart = svg.append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`)
-        .selectAll('rect').data(data)
-        .enter().append('rect')
-        .attr('fill', (d) => {
-          return colors(d.y);
-        })
-        .attr('width', (d) => {
-          return Math.floor(width / data.length) - 1;
-        })
-        .attr('height', (d) => {
-          return 0;
-        })
-        .attr('x', (d, i) => {
-          return i * (width / data.length);
-        })
-        .attr('y', (d) => {
-          return height;
-        })
+        .attr('class', 'bars')
+        .selectAll('rect')
+        .data(data)
+        .join('rect')
+        .attr('fill', d => colors(d.y))
+        .attr('x', (d, i) => x(d.x))
+        .attr('y', d => height)
+        .attr('width', x.bandwidth())
+        .attr('height', 0)
         // on mouseover event
         .on('mouseover', (event, d) => {
           d3.select(event.currentTarget)
             .style('opacity', .8);
-          tooltip.transition().duration(200).style('opacity', 0.9);
+          tooltip.transition().duration(100).style('opacity', 0.9);
           tooltip.html(d.x + ': ' + d.y + '%')
-            .style('left', (event.pageX - 35) + 'px')
-            .style('top', (event.pageY - 30) + 'px');
+            .style('left', (event.pageX - 50) + 'px')
+            .style('top', (event.pageY - 50) + 'px');
         })
         .on('mouseout', (event, d) => {
           d3.select(event.currentTarget)
@@ -76,20 +75,10 @@ function BarChart({ data }) {
         });
 
       // guides
-      d3.select('#time-chart svg').append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`)
-        .call(yAxisTicks);
-      d3.select('#time-chart svg').append('text')
-        .attr('x', 0)
-        .attr('y', 10)
-        .attr('fill', '#FDC170')
-        .style('font-size', '10pt')
-        .text('% of women from all credits');
-
-      d3.select('#time-chart svg').append('g')
-        .attr('transform', `translate(${margin.left},${height + margin.top})`)
-        .call(xAxisTicks);
-      d3.select('#time-chart svg').append('text')
+      svg.append('g')
+        .attr('class', 'x-axis')
+        .call(xAxis);
+      svg.append('text')
         .attr('x', width / 2 + margin.left)
         .attr('y', height + margin.top + margin.bottom + 5)
         .attr('fill', '#FDC170')
@@ -97,8 +86,18 @@ function BarChart({ data }) {
         .style('text-anchor', 'middle')
         .text('years');
 
+      svg.append('g')
+        .attr('class', 'y-axis')
+        .call(yAxis);
+      svg.append('text')
+        .attr('x', 0)
+        .attr('y', 15)
+        .attr('fill', '#FDC170')
+        .style('font-size', '10pt')
+        .text('% of women from all credits');
+
       // legend
-      const bgGradient = d3.select('#time-chart svg').append('linearGradient')
+      const bgGradient = svg.append('linearGradient')
         .attr('id', 'bg-gradient');
       bgGradient
         .append('stop')
@@ -109,19 +108,19 @@ function BarChart({ data }) {
         .attr('stop-color', '#D40242')
         .attr('offset', '100%');
 
-      d3.select('#time-chart svg').append('text')
+      svg.append('text')
         .attr('x', width / 4 * 3)
         .attr('y', 30)
         .attr('fill', 'white')
         .style('font-size', '10pt')
         .text('0%');
-      d3.select('#time-chart svg').append('rect')
+      svg.append('rect')
         .attr('x', width / 4 * 3 + 30)
         .attr('y', 20)
         .attr('width', 200)
         .attr('height', 10)
         .style('fill', 'url(#bg-gradient)');
-      d3.select('#time-chart svg').append('text')
+      svg.append('text')
         .attr('x', width / 4 * 3 + 240)
         .attr('y', 30)
         .attr('fill', 'white')
@@ -130,16 +129,31 @@ function BarChart({ data }) {
 
       // animation
       chart.transition()
-        .attr('height', (d) => {
-          return y(d.y);
-        })
-        .attr('y', (d, i) => {
-          return height - y(d.y);
-        })
+        .attr('height', (d) => y(d.y))
+        .attr('y', (d, i) => height - y(d.y))
         .duration(50)
         .delay((d, i) => {
           return i * 5
         });
+
+      /**
+       * Zoomable Bar Chart Code from https://observablehq.com/@d3/zoomable-bar-chart
+       */
+      function zoom(svg) {
+        const extent = [[margin.left, margin.top], [width, height]];
+
+        svg.call(d3.zoom()
+          .scaleExtent([1, 8])
+          .translateExtent(extent)
+          .extent(extent)
+          .on('zoom', zoomed));
+
+        function zoomed(event) {
+          x.range([0, width].map(d => event.transform.applyX(d)));
+          svg.selectAll('.bars rect').attr('x', d => x(d.x)).attr('width', x.bandwidth());
+          svg.selectAll('.x-axis').call(xAxis);
+        }
+      }
     }
   });
 
