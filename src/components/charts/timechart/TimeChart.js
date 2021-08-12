@@ -13,7 +13,6 @@ function TimeChart({ url }) {
     Object.keys(url).forEach(u => {
       urlString += '&' + u + '=' + url[u];
     });
-    console.log(urlString);
     fetch('http://localhost:9000/api/time?size=1000&' + urlString)
       .then(res => res.json())
       .then(setData)
@@ -28,7 +27,7 @@ function TimeChart({ url }) {
   if (url.category !== 'none') {
     return (
       <section id="charts">
-        <h2 className="text-center mb-1">Female participation in movies over time</h2>
+        <h2 className="text-center mb-1">Women's participation in movies over time</h2>
         <p className="text-center">Double click or use your mousewheel to zoom in</p>
         {loading && <p>LOADING...</p>}
         {!loading && <BarChartStacked data={data} />}
@@ -37,7 +36,7 @@ function TimeChart({ url }) {
   } else {
     return (
       <section id="charts">
-        <h2 className="text-center mb-1">Female participation in movies over time</h2>
+        <h2 className="text-center mb-1">Women's participation in movies over time</h2>
         <p className="text-center">Double click or use your mousewheel to zoom in</p>
         {loading && <p>LOADING...</p>}
         {!loading && <BarChart data={data} />}

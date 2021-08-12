@@ -23,7 +23,7 @@ a {
   color: var(--orange);
 }
 
-a:hover {
+a:hover, a:focus, a:active {
   color: var(--orange-light);
   text-decoration: none;
 }
@@ -92,7 +92,7 @@ h2 {
   font-weight: 600;
   font-size: 1.4rem;
   color: var(--orange);
-  margin-bottom: 1.7rem;
+  margin-bottom: 1.5rem;
 }
 
 h3 {
@@ -118,6 +118,20 @@ section {
   background-color: var(--pink-light);
 }
 
+.btn.btn-info {
+  background-color: transparent;
+  border: none;
+  color: var(--orange);
+  padding: 0;
+  vertical-align: unset;
+}
+.btn.btn-info:hover, .btn.btn-info:focus, .btn.btn-info:active {
+  background-color: transparent !important;
+  border: none;
+  box-shadow: none;
+  color: var(--orange-light) !important;
+}
+
 .text-info {
   color: var(--pink-light) !important;
 }
@@ -126,10 +140,25 @@ strong {
   color: var(--green-light);
 }
 
+.modal-dialog {
+  max-width: 600px;
+}
+
+.modal-content, .modal-header, .modal-body, .modal-footer {
+  background-color: var(--background--light);
+  border-color: #123A5F;
+  color: var(--muted);
+}
+
 #sidebar {
   height: calc(100% - 3rem);
 }
 
 #charts .diagram {
   text-align: center;
+}
+
+#genres-departments-chart {
+  width: 90%;
+  margin: auto;
 }

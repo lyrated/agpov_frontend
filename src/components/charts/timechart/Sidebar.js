@@ -100,7 +100,7 @@ function TimeChartSidebar({ setUrl }) {
           <option value="genres" disabled={genre !== 'all' || dep !== 'all'}>Genres</option>
           <option value="departments" disabled={genre !== 'all' || dep !== 'all'}>Departments</option>
         </select>
-        <p className="small">Category can only be selected if 'All' is selected in above filters.</p>
+        <p className="small">Category can only be selected if 'All' is selected in the associated filter.</p>
       </div>
 
       <button className="btn btn-primary w-100"

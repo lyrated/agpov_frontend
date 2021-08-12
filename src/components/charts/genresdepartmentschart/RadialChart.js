@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 
+/**
+ * Zoomable Sunburst Code from https://observablehq.com/@d3/zoomable-sunburst
+ */
 function RadialChart({ data }) {
   useEffect(() => {
     if (data != null) {
-      const width = 700;
+      const width = 600;
       const radius = width / 6;
 
       const arc = d3.arc()

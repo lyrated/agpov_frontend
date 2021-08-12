@@ -126,11 +126,6 @@ function BarChartStacked(props) {
 
       // legend
       const legend = columns.slice(2, Math.round(columns.length / 3) + 1);
-      // replace label for Actors to avoid confusion
-      let iActors = legend.indexOf('Actors');
-      if (iActors !== -1) {
-        legend[iActors] = 'Background Acting';
-      }
       svg.selectAll('legend')
         .data(legend).enter()
         .append('rect')
@@ -139,6 +134,11 @@ function BarChartStacked(props) {
         .attr('height', 10)
         .attr('x', width / 5 * 3)
         .attr('y', (d, i) => (i * 20) + 10);
+      // replace label for Actors to avoid confusion
+      let iActors = legend.indexOf('Actors');
+      if (iActors !== -1) {
+        legend[iActors] = 'Background Acting';
+      }
       svg.selectAll('labels')
         .data(legend).enter()
         .append('text')
@@ -149,11 +149,6 @@ function BarChartStacked(props) {
         .text(d => d);
 
       const legend2 = columns.slice(Math.round(columns.length / 3) + 1, Math.round(columns.length / 3) * 2 + 1);
-      // replace Costume & Make Up to shorten it
-      let iCM = legend2.indexOf('Costume & Make-Up');
-      if (iCM !== -1) {
-        legend2[iCM] = 'Costume/Make-Up';
-      }
       svg.selectAll('legend')
         .data(legend2).enter()
         .append('rect')
@@ -162,6 +157,11 @@ function BarChartStacked(props) {
         .attr('height', 10)
         .attr('x', width / 5 * 3 + 125)
         .attr('y', (d, i) => (i * 20) + 10);
+      // rename Costume & Make Up to shorten it
+      let iCM = legend2.indexOf('Costume & Make-Up');
+      if (iCM !== -1) {
+        legend2[iCM] = 'Costume/Make-Up';
+      }
       svg.selectAll('labels')
         .data(legend2).enter()
         .append('text')
