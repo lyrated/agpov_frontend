@@ -9,7 +9,12 @@ function TimeChart({ url }) {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:9000/api/time?size=1000&' + url)
+    let urlString = '';
+    Object.keys(url).forEach(u => {
+      urlString += '&' + u + '=' + url[u];
+    });
+    console.log(urlString);
+    fetch('http://localhost:9000/api/time?size=1000&' + urlString)
       .then(res => res.json())
       .then(setData)
       .then(() => setLoading(false))
@@ -20,9 +25,11 @@ function TimeChart({ url }) {
     return <pre>{JSON.stringify(error, null, 2)}</pre>;
   }
 
-  if (!url.includes('category=none')) {
+  if (url.category !== 'none') {
     return (
       <section id="charts">
+        <h2 className="text-center mb-1">Female participation in movies over time</h2>
+        <p className="text-center">Double click or use your mousewheel to zoom in</p>
         {loading && <p>LOADING...</p>}
         {!loading && <BarChartStacked data={data} />}
       </section>
@@ -30,6 +37,8 @@ function TimeChart({ url }) {
   } else {
     return (
       <section id="charts">
+        <h2 className="text-center mb-1">Female participation in movies over time</h2>
+        <p className="text-center">Double click or use your mousewheel to zoom in</p>
         {loading && <p>LOADING...</p>}
         {!loading && <BarChart data={data} />}
       </section>

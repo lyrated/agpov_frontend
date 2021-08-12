@@ -57,8 +57,13 @@ header .subtitle {
   font-weight: 300;
 }
 
+header .navbar .navbar-nav .nav-item {
+  min-width: 150px;
+  margin: auto;
+}
+
 header .navbar .navbar-nav .nav-item a.nav-link {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--white);
   padding: 0 1rem;
   text-align: center;
@@ -84,8 +89,15 @@ footer p {
 }
 
 h2 {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--orange);
+  margin-bottom: 1.7rem;
+}
+
+h3 {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--green-light);
 }
 
@@ -104,6 +116,14 @@ section {
 
 .btn.btn-primary:hover, .btn.btn-primary:focus, .btn.btn-primary:active {
   background-color: var(--pink-light);
+}
+
+.text-info {
+  color: var(--pink-light) !important;
+}
+
+strong {
+  color: var(--green-light);
 }
 
 #sidebar {

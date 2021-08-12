@@ -46,7 +46,7 @@ function TimeChartSidebar({ setUrl }) {
   }
 
   const handleInputChange = useCallback(e => {
-    setUrl('start=' + start + '&end=' + end + '&genre=' + genre + '&dep=' + dep + '&category=' + cat);
+    setUrl({ start: start, end: end, genre: genre, dep: dep, category: cat });
   }, [setUrl, start, end, genre, dep, cat]);
 
   // select options
@@ -62,8 +62,9 @@ function TimeChartSidebar({ setUrl }) {
 
   return (
     <>
+      <h2>Filters</h2>
       <div className="pb-2">
-        <h2>Select years:</h2>
+        <h3>Select years:</h3>
         <label className="mb-0">Start</label>
         <select className="custom-select" name="start" defaultValue={start} onChange={e => setStart(e.target.value)}>
           {yearsOptions}
@@ -75,14 +76,14 @@ function TimeChartSidebar({ setUrl }) {
       </div>
 
       <div className="py-2">
-        <h2>Genres:</h2>
+        <h3>Select genre:</h3>
         <select className="custom-select" name="genre" defaultValue={'all'} onChange={handleGenreChange}>
           {genresOptions}
         </select>
       </div>
 
       <div className="py-2">
-        <h2>Departments:</h2>
+        <h3>Select departments</h3>
         <select className="custom-select" name="dep" defaultValue={'all'} onChange={handleDepChange}>
           <option value="all">All</option>
           <option value="acting">Acting</option>
@@ -93,7 +94,7 @@ function TimeChartSidebar({ setUrl }) {
       </div>
 
       <div className="pt-2">
-        <h2>Show category:</h2>
+        <h3>Show category:</h3>
         <select className="custom-select" value={selected} name="cat" onChange={handleCatChange}>
           <option value="none">None</option>
           <option value="genres" disabled={genre !== 'all' || dep !== 'all'}>Genres</option>
