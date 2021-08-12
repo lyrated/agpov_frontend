@@ -12,7 +12,7 @@ function TimeChartInfo({ url }) {
 
   return (
     <div className="col">
-      <p>
+      <p className="mb-0">
         This chart shows how many women worked in <strong>{dep}</strong> in <strong>{genre}
         </strong> during the years <strong>{url.start} to {url.end}</strong> according to the movie credits. {textCat}
         <a href="#"> Click here to read more.</a>
