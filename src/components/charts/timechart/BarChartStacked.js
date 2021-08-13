@@ -28,10 +28,10 @@ function BarChartStacked(props) {
         .rangeRound([height, 0]);
 
       const colors = [
-        '#9381FF', '#7662E4', '#3D948B', '#F3A712', '#FDAAA0',
+        '#999999', '#A42147', '#2D847B', '#F3A712', '#FDAAA0',
         '#DE3F4C', '#66A0ED', '#42C3A8', '#F9CD44', '#EA7073',
-        '#57A3C7', '#94B8DB', '#0EE0D2', '#FFF275', '#CC3E55',
-        '#B96481', '#08627C', '#FCD491', '#70FF8D', '#A42147'
+        '#57A3C7', '#9381FF', '#0EE0D2', '#FFF275', '#CC3E55',
+        '#B96481', '#08627C', '#FCD491', '#70FF8D', '#6652D4'
       ];
       let color = d3.scaleOrdinal()
         .domain(series.map(d => d.key))
@@ -56,7 +56,9 @@ function BarChartStacked(props) {
         .style('position', 'absolute')
         .style('padding', '0 10px')
         .style('background', '#F0F0FA')
-        .style('opacity', 0)
+        .style("display", "block")
+        .style("opacity", 0)
+        .style("font-size", "14px")
         .style('color', 'black');
 
       const svg = d3.select('#time-chart').append('svg')
@@ -81,16 +83,20 @@ function BarChartStacked(props) {
         // on mouseover event
         .on('mouseover', (event, d) => {
           d3.select(event.currentTarget)
-            .style('opacity', .8);
-          tooltip.transition().duration(100).style('opacity', 0.9);
+            .style('opacity', 0.9);
+          tooltip.transition().duration(100)
+            .style('opacity', 0.9)
+            .style("display", "block");
           tooltip.html(`${d.data.name}: ${d.key} - ${formatValue(d.data[d.key])}%`)
-            .style('left', (event.pageX - 50) + 'px')
-            .style('top', (event.pageY - 50) + 'px');
+            .style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY - 20) + 'px');
         })
         .on('mouseout', (event, d) => {
           d3.select(event.currentTarget)
             .style('opacity', 1);
-          tooltip.transition().duration(100).style('opacity', 0);
+          tooltip
+            .style('opacity', 0)
+            .style("display", "none");
         });
 
       // animation
@@ -125,7 +131,7 @@ function BarChartStacked(props) {
         .text('% of women from all credits');
 
       // legend
-      const legend = columns.slice(2, Math.round(columns.length / 3) + 1);
+      const legend = columns.slice(1, Math.round(columns.length / 3) + 1);
       svg.selectAll('legend')
         .data(legend).enter()
         .append('rect')

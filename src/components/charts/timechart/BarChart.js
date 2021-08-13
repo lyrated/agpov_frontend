@@ -40,7 +40,9 @@ function BarChart({ data }) {
         .style('position', 'absolute')
         .style('padding', '0 10px')
         .style('background', '#F0F0FA')
+        .style('display', 'none')
         .style('opacity', 0)
+        .style('font-size', '14px')
         .style('color', 'black');
 
       const svg = d3.select('#time-chart').append('svg')
@@ -62,16 +64,20 @@ function BarChart({ data }) {
         // on mouseover event
         .on('mouseover', (event, d) => {
           d3.select(event.currentTarget)
-            .style('opacity', .8);
-          tooltip.transition().duration(100).style('opacity', 0.9);
+            .style('opacity', 0.9);
+          tooltip.transition().duration(100)
+            .style('opacity', 0.9)
+            .style("display", "block");
           tooltip.html(d.x + ': ' + d.y + '%')
-            .style('left', (event.pageX - 50) + 'px')
-            .style('top', (event.pageY - 50) + 'px');
+            .style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY - 20) + 'px');
         })
         .on('mouseout', (event, d) => {
           d3.select(event.currentTarget)
             .style('opacity', 1);
-          tooltip.transition().duration(100).style('opacity', 0);
+          tooltip
+            .style('opacity', 0)
+            .style("display", "none");
         });
 
       // guides

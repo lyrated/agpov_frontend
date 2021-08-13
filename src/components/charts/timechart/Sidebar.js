@@ -94,13 +94,13 @@ function TimeChartSidebar({ setUrl }) {
       </div>
 
       <div className="pt-2">
-        <h3>Show category:</h3>
+        <h3>Divide into categories:</h3>
         <select className="custom-select" value={selected} name="cat" onChange={handleCatChange}>
           <option value="none">None</option>
           <option value="genres" disabled={genre !== 'all' || dep !== 'all'}>Genres</option>
           <option value="departments" disabled={genre !== 'all' || dep !== 'all'}>Departments</option>
         </select>
-        <p className="small">Category can only be selected if 'All' is selected in the associated filter.</p>
+        <p className="small">Category can only be selected if 'All' is selected in above filters.</p>
       </div>
 
       <button className="btn btn-primary w-100"
