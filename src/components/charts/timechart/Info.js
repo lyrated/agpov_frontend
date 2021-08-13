@@ -18,13 +18,13 @@ function TimeChartInfo({ url }) {
   const handleShow = () => setShow(true);
 
   const text = <>This chart shows the percentages of women who worked in <strong>{dep}</strong> and <strong>{genre}
-    </strong> during the years <strong>{url.start} to {url.end}</strong> according to the movie credits. {textCat}
-    <Button variant="info" onClick={handleShow}> Click here to read more.</Button></>;
+    </strong> during the years <strong>{url.start} to {url.end}</strong> according to the movie credits. {textCat} <Button 
+    variant="info" onClick={handleShow}>Click here to read more.</Button></>;
 
   return (
     <>
       <h2 className="text-center mb-0">Women's participation in movies over time</h2>
-      <p className="text-center">Double click or use your mousewheel to zoom in.</p>
+      <p className="text-center">Double click or use your mousewheel to zoom in</p>
       <Infobox text={text} />
 
       {/* MODAL */}

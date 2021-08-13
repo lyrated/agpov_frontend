@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 function BarChart({ data }) {
   useEffect(() => {
     if (data !== null && !data.data) {
-      let margin = { top: 30, right: 30, bottom: 30, left: 40 },
+      let margin = { top: 30, right: 30, bottom: 30, left: 50 },
         height = 500 - margin.top - margin.bottom,
         width = 900 - margin.right - margin.left;
 
@@ -47,7 +47,7 @@ function BarChart({ data }) {
 
       const svg = d3.select('#time-chart').append('svg')
         .attr('viewBox',
-          [0, 0, width + margin.right + margin.left + 10, height + margin.top + margin.bottom + 10])
+          [0, 0, width + margin.right + margin.left, height + margin.top + margin.bottom + 10])
         .call(zoom);
 
       const chart = svg.append('g')
@@ -123,7 +123,7 @@ function BarChart({ data }) {
         .attr('x', width / 4 * 3)
         .attr('y', 30)
         .attr('fill', 'white')
-        .style('font-size', '10pt')
+        .style('font-size', '12px')
         .text('0%');
       svg.append('rect')
         .attr('x', width / 4 * 3 + 30)
@@ -135,7 +135,7 @@ function BarChart({ data }) {
         .attr('x', width / 4 * 3 + 240)
         .attr('y', 30)
         .attr('fill', 'white')
-        .style('font-size', '10pt')
+        .style('font-size', '12px')
         .text(d3.max(data, d => d.y) + '%');
 
       // animation

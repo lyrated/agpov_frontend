@@ -24,23 +24,19 @@ function TimeChart({ url }) {
     return <pre>{JSON.stringify(error, null, 2)}</pre>;
   }
 
-  if (url.category !== 'none') {
+  if (url.category === 'none') {
     return (
-      <section id="charts">
-        <h2 className="text-center mb-1">Women's participation in movies over time</h2>
-        <p className="text-center">Double click or use your mousewheel to zoom in</p>
+      <>
         {loading && <p>LOADING...</p>}
-        {!loading && <BarChartStacked data={data} />}
-      </section>
+        {!loading && <BarChart data={data} />}
+      </>
     );
   } else {
     return (
-      <section id="charts">
-        <h2 className="text-center mb-1">Women's participation in movies over time</h2>
-        <p className="text-center">Double click or use your mousewheel to zoom in</p>
+      <>
         {loading && <p>LOADING...</p>}
-        {!loading && <BarChart data={data} />}
-      </section>
+        {!loading && <BarChartStacked data={data} />}
+      </>
     );
   }
 }

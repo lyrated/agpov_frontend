@@ -10,7 +10,7 @@ function BarChartStacked(props) {
       const data = props.data.data;
       const columns = props.data.columns;
 
-      let margin = { top: 30, right: 30, bottom: 30, left: 40 },
+      let margin = { top: 30, right: 30, bottom: 30, left: 50 },
         height = 500 - margin.top - margin.bottom,
         width = 900 - margin.right - margin.left;
 
@@ -63,7 +63,7 @@ function BarChartStacked(props) {
 
       const svg = d3.select('#time-chart').append('svg')
         .attr('viewBox',
-          [0, 0, width + margin.right + margin.left + 10, height + margin.top + margin.bottom + 10])
+          [0, 0, width + margin.right + margin.left, height + margin.top + margin.bottom + 10])
         .call(zoom);
 
       const chart = svg.append('g')
