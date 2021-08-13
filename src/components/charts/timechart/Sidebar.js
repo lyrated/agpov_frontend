@@ -21,7 +21,7 @@ function TimeChartSidebar({ setUrl }) {
   const [end, setEnd] = useState(END);
   const [genre, setGenre] = useState('all');
   const [dep, setDep] = useState('all');
-  const [cat, setCat] = useState('genres');
+  const [cat, setCat] = useState('none');
   const [selected, setSelected] = useState('none');
 
   const handleCatChange = e => {
@@ -83,7 +83,7 @@ function TimeChartSidebar({ setUrl }) {
       </div>
 
       <div className="py-2">
-        <h3>Select departments</h3>
+        <h3>Select department:</h3>
         <select className="custom-select" name="dep" defaultValue={'all'} onChange={handleDepChange}>
           <option value="all">All</option>
           <option value="acting">Acting</option>

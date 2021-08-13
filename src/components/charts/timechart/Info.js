@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import Infobox from '../../common/Infobox';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
@@ -16,13 +17,15 @@ function TimeChartInfo({ url }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const text = <>This chart shows the percentages of women who worked in <strong>{dep}</strong> and <strong>{genre}
+    </strong> during the years <strong>{url.start} to {url.end}</strong> according to the movie credits. {textCat}
+    <Button variant="info" onClick={handleShow}> Click here to read more.</Button></>;
+
   return (
-    <div className="col">
-      <p className="mb-0">
-        This chart shows the percentages of women who worked in <strong>{dep}</strong> and <strong>{genre}
-        </strong> during the years <strong>{url.start} to {url.end}</strong> according to the movie credits. {textCat}
-        <Button variant="info" onClick={handleShow}> Click here to read more.</Button>
-      </p>
+    <>
+      <h2 className="text-center mb-0">Women's participation in movies over time</h2>
+      <p className="text-center">Double click or use your mousewheel to zoom in.</p>
+      <Infobox text={text} />
 
       {/* MODAL */}
       <Modal show={show} onHide={handleClose}>
@@ -44,8 +47,7 @@ function TimeChartInfo({ url }) {
           </Button>
         </Modal.Footer>
       </Modal>
-
-    </div>
+    </>
   );
 }
 

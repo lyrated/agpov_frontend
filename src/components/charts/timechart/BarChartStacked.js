@@ -56,9 +56,9 @@ function BarChartStacked(props) {
         .style('position', 'absolute')
         .style('padding', '0 10px')
         .style('background', '#F0F0FA')
-        .style("display", "block")
-        .style("opacity", 0)
-        .style("font-size", "14px")
+        .style('display', 'block')
+        .style('opacity', 0)
+        .style('font-size', '14px')
         .style('color', 'black');
 
       const svg = d3.select('#time-chart').append('svg')
@@ -86,17 +86,20 @@ function BarChartStacked(props) {
             .style('opacity', 0.9);
           tooltip.transition().duration(100)
             .style('opacity', 0.9)
-            .style("display", "block");
+            .style('display', 'block');
           tooltip.html(`${d.data.name}: ${d.key} - ${formatValue(d.data[d.key])}%`)
             .style('left', (event.pageX + 10) + 'px')
             .style('top', (event.pageY - 20) + 'px');
+          setTimeout(() => {
+            tooltip.style('opacity', 0).style('display', 'none');
+          }, 5000);
         })
         .on('mouseout', (event, d) => {
           d3.select(event.currentTarget)
             .style('opacity', 1);
           tooltip
             .style('opacity', 0)
-            .style("display", "none");
+            .style('display', 'none');
         });
 
       // animation

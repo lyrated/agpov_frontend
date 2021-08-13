@@ -65,19 +65,24 @@ function BarChart({ data }) {
         .on('mouseover', (event, d) => {
           d3.select(event.currentTarget)
             .style('opacity', 0.9);
-          tooltip.transition().duration(100)
+          tooltip.transition()
+            .duration(100)
+            .delay(500)
             .style('opacity', 0.9)
-            .style("display", "block");
+            .style('display', 'block');
           tooltip.html(d.x + ': ' + d.y + '%')
             .style('left', (event.pageX + 10) + 'px')
             .style('top', (event.pageY - 20) + 'px');
+          setTimeout(() => {
+            tooltip.style('opacity', 0).style('display', 'none');
+          }, 5000);
         })
         .on('mouseout', (event, d) => {
           d3.select(event.currentTarget)
             .style('opacity', 1);
           tooltip
             .style('opacity', 0)
-            .style("display", "none");
+            .style('display', 'none');
         });
 
       // guides
