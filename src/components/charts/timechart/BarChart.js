@@ -5,7 +5,7 @@ function BarChart({ data }) {
   useEffect(() => {
     if (data !== null && !data.data) {
       let margin = { top: 30, right: 30, bottom: 30, left: 50 },
-        height = 500 - margin.top - margin.bottom,
+        height = 450 - margin.top - margin.bottom,
         width = 900 - margin.right - margin.left;
 
       let x = d3.scaleBand()

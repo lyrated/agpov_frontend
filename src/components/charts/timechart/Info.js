@@ -23,7 +23,7 @@ function TimeChartInfo({ url }) {
 
   return (
     <>
-      <h2 className="text-center mb-0">Women's participation in movies over time</h2>
+      <h2 className="text-center mb-0">Women's participation in {genre} over the years {url.start} - {url.end}</h2>
       <p className="text-center">Double click or use your mousewheel to zoom in</p>
       <Infobox text={text} />
 
