@@ -2,19 +2,23 @@ import React, { useState, useEffect } from 'react';
 import RadialChart from './RadialChart';
 
 
-function GenresDeparmentsChart() {
+function GenresDeparmentsChart({ url }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  let urlString = '';
+  Object.keys(url).forEach(u => {
+    urlString += '&' + u + '=' + url[u];
+  });
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:9000/api/genres-departments?size=10000&dataset=crew&time=1995')
+    fetch('http://localhost:9000/api/genres-departments?size=10000' + urlString)
       .then(res => res.json())
       .then(setData)
       .then(() => setLoading(false))
-    .catch(setError);
-  }, []);
+      .catch(setError);
+  }, [url]);
 
   if (error) {
     return <pre>{JSON.stringify(error, null, 2)}</pre>;
@@ -22,8 +26,8 @@ function GenresDeparmentsChart() {
 
   return (
     <section id="charts">
-    {loading && <p>LOADING...</p>}
-    {!loading && <RadialChart data={data} />}
+      {loading && <p>LOADING...</p>}
+      {!loading && <RadialChart data={data} />}
     </section>
   );
 }

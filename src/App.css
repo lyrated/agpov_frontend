@@ -42,7 +42,6 @@ header h1 {
   display: inline-block;
   text-transform: uppercase;
   font-weight: bold;
-  /* font-size: 2rem; */
   margin-bottom: 0;
   color: transparent;
   background: linear-gradient(to right, var(--pink-light) 0%, var(--orange) 100%);
@@ -90,8 +89,8 @@ footer p {
 
 h2 {
   font-weight: 600;
-  font-size: 1.4rem;
-  color: var(--orange);
+  font-size: 1.5rem;
+  color: var(--green);
   margin-bottom: 1.5rem;
 }
 
@@ -121,7 +120,7 @@ section {
 .btn.btn-info {
   background-color: transparent;
   border: none;
-  color: var(--orange);
+  color: var(--blue-light);
   padding: 0;
   vertical-align: unset;
 }
@@ -137,7 +136,33 @@ section {
 }
 
 strong {
-  color: var(--green-light);
+  color: var(--orange-light);
+}
+
+.infobox {
+  border: 1px solid var(--pink-light);
+  border-radius: 0.5rem;
+  padding: 1rem 0.8rem;
+}
+
+button.timespan {
+  display: block;
+  background-color: transparent;
+  border: 1px solid var(--muted);
+  border-radius: 1.5rem;
+  color: var(--muted);
+  padding: 0.2rem 1.2rem;
+  margin: 0.5rem 0;
+  transition: 0.2s;
+}
+button.timespan:hover {
+  color: var(--orange);
+}
+button.timespan.active {
+  background-color: var(--orange-light);
+  border-color: var(--orange-light);
+  color: white;
+  font-weight: 600;
 }
 
 .modal-dialog {
@@ -159,6 +184,6 @@ strong {
 }
 
 #genres-departments-chart {
-  width: 90%;
+  max-width: 850px;
   margin: auto;
 }

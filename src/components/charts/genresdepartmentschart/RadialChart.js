@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 
 /**
- * Zoomable Sunburst Code from https://observablehq.com/@d3/zoomable-sunburst
+ * Zoomable Sunburst Base Code from https://observablehq.com/@d3/zoomable-sunburst
  */
 function RadialChart({ data }) {
   useEffect(() => {
     if (data != null) {
-      const width = 600;
+      const width = 650;
       const radius = width / 6;
 
       const arc = d3.arc()
@@ -29,11 +29,32 @@ function RadialChart({ data }) {
 
       let color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
 
+      let getColor = d => {
+        if (d.depth === 3) {
+          if (d.data.name === "Male") return "#FDC170";
+          else if (d.data.name === "Female") return "#D40242";
+          else return "#9A999F";
+        }
+
+        while (d.depth > 1) d = d.parent;
+        return color(d.data.name);
+      }
+
       let format = d3.format(",d");
 
       const root = partition(data);
 
       root.each(d => d.current = d);
+
+      let tooltip = d3.select("body")
+        .append("div")
+        .style("position", "absolute")
+        .style("padding", "0 10px")
+        .style("background", "#F0F0FA")
+        .style("display", "block")
+        .style("opacity", 0)
+        .style("font-size", "14px")
+        .style("color", "black");
 
       const svg = d3.select("#genres-departments-chart").append("svg")
         .attr("viewBox", [0, 0, width, width])
@@ -46,21 +67,43 @@ function RadialChart({ data }) {
         .selectAll("path")
         .data(root.descendants().slice(1))
         .join("path")
-        .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
-        .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
-        .attr("d", d => arc(d.current));
+        .attr("fill", getColor)
+        .attr("fill-opacity", d => arcVisible(d.current) ? 0.75 : 0)
+        .attr("d", d => arc(d.current))
+        .on("mouseover", (event, d) => {
+          if (arcVisible(d.current)) {
+            tooltip.transition().duration(100).delay(600)
+              .style("opacity", 0.9)
+              .style("display", "block");
+            tooltip.html(`${d.ancestors().map(d => d.data.name).reverse().join(" > ")}<br />${format(d.value)} people`)
+              .style("left", (event.pageX + 40) + "px")
+              .style("top", (event.pageY - 10) + "px");
+            setTimeout(() =>
+              tooltip
+                .style("opacity", 0)
+                .style("display", "none"), 4000);
+          }
+        })
+        .on("mouseout", (event, d) => {
+          tooltip
+            .style("opacity", 0)
+            .style("display", "none");
+        })
+        .on("mousedown", (event, d) => {
+          tooltip
+            .style("opacity", 0)
+            .style("display", "none");
+        });
 
       path.filter(d => d.children)
         .style("cursor", "pointer")
         .on("click", clicked);
 
-      path.append("title")
-        .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
-
       const label = g.append("g")
         .attr("pointer-events", "none")
         .attr("text-anchor", "middle")
         .style("user-select", "none")
+        .attr("fill", "#D2D2DC")
         .selectAll("text")
         .data(root.descendants().slice(1))
         .join("text")
@@ -76,8 +119,47 @@ function RadialChart({ data }) {
         .attr("pointer-events", "all")
         .on("click", clicked);
 
+      const backLabel = g.append("text")
+        .datum(root)
+        .attr("pointer-events", "all")
+        .style("cursor", "default")
+        .style("font-size", "10pt")
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .attr("dy", "0")
+        .text("Genres")
+        .on("click", clicked);
+      const goBackLabel = g.append("text")
+        .datum(root)
+        .attr("pointer-events", "all")
+        .style("cursor", "default")
+        .style("font-size", "8pt")
+        .attr("text-anchor", "middle")
+        .attr("fill", "transparent")
+        .attr("dy", "10pt")
+        .text("Go back")
+        .on("click", clicked);
+
       function clicked(event, p) {
+        if (p.depth > 0) {
+          backLabel
+            .style("cursor", "pointer")
+            .text(`${p.parent.data.name} > ${p.data.name}`);
+          goBackLabel.transition().duration(750)
+            .style("cursor", "pointer")
+            .attr("fill", "white");
+        } else {
+          backLabel
+            .text("Genres")
+            .style("cursor", "default");
+          goBackLabel.transition().duration(750)
+            .style("cursor", "default")
+            .attr("fill", "transparent");
+        }
+
         parent.datum(p.parent || root);
+        backLabel.datum(p.parent || root);
+        goBackLabel.datum(p.parent || root);
 
         root.each(d => d.target = {
           x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
@@ -99,7 +181,7 @@ function RadialChart({ data }) {
           .filter(function (d) {
             return +this.getAttribute("fill-opacity") || arcVisible(d.target);
           })
-          .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
+          .attr("fill-opacity", d => arcVisible(d.target) ? 0.75 : 0)
           .attrTween("d", d => () => arc(d.current));
 
         label.filter(function (d) {
