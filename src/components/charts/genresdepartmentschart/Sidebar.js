@@ -11,7 +11,6 @@ function GenresDepartmentsSidebar({ setUrl }) {
   const [time, setTime] = useState(2010);
 
   const isActive = i => {
-    console.log(i, '####', time);
     if (+time === i) {
       return true;
     } else {
@@ -38,7 +37,6 @@ function GenresDepartmentsSidebar({ setUrl }) {
 
   return (
     <>
-      <h2>Filters</h2>
       <h3>Select data:</h3>
       <div className="form-check pb-4">
         <input type="checkbox" id="data" className="form-check-input" value="all" onChange={handleDatasetChange} />

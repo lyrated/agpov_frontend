@@ -62,7 +62,6 @@ function TimeChartSidebar({ setUrl }) {
 
   return (
     <>
-      <h2>Filters</h2>
       <div className="pb-2">
         <h3>Select years:</h3>
         <label className="mb-0">Start</label>
