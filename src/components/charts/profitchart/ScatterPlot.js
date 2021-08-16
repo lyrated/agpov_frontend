@@ -147,13 +147,9 @@ function ScatterPlot({ data }) {
         // on mouseover event
         .on('mouseover', (event, d) => {
           d3.select(event.currentTarget)
-            .style('opacity', 0.8);
+            .style('opacity', 0.5);
           tooltipMouseover(event, d);
           colorChange(d, '#032541');
-          setTimeout(() => {
-            tooltipMouseout(event, d);
-            colorChange(d);
-          }, 15000);
         })
         .on('mouseout', (event, d) => {
           d3.select(event.currentTarget)
