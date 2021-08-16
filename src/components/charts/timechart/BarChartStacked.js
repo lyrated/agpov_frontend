@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 
 /**
- * Stacked Bar Chart Code from https://observablehq.com/@d3/stacked-bar-chart
+ * Stacked Bar Chart Base Code from https://observablehq.com/@d3/stacked-bar-chart
  */
 function BarChartStacked(props) {
   useEffect(() => {
@@ -200,13 +200,14 @@ function BarChartStacked(props) {
         .text(d => d);
 
       /**
-       * Zoomable Bar Chart Code from https://observablehq.com/@d3/zoomable-bar-chart
+       * Zoomable Bar Chart Base Code from https://observablehq.com/@d3/zoomable-bar-chart
        */
       function zoom(svg) {
         const extent = [[margin.left, margin.top], [width, height]];
 
+        const max = Math.max(Math.ceil(data.length / 10), 2);
         svg.call(d3.zoom()
-          .scaleExtent([1, 8])
+          .scaleExtent([1, max])
           .translateExtent(extent)
           .extent(extent)
           .on('zoom', zoomed));

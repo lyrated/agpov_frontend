@@ -153,8 +153,9 @@ function BarChart({ data }) {
       function zoom(svg) {
         const extent = [[margin.left, margin.top], [width, height]];
 
+        const max = Math.max(Math.ceil(data.length / 10), 2);
         svg.call(d3.zoom()
-          .scaleExtent([1, 8])
+          .scaleExtent([1, max])
           .translateExtent(extent)
           .extent(extent)
           .on('zoom', zoomed));
