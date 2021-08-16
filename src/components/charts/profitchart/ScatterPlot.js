@@ -12,6 +12,7 @@ function ScatterPlot({ data }) {
         width = 850 - margin.right - margin.left;
 
       const formatValue = d3.format(".2s");
+      const formatDollar = d3.format("$,d");
 
       const svg = d3.select("#profit-chart").append("svg")
         .attr("viewBox", [0, 0, width, height])
@@ -26,7 +27,7 @@ function ScatterPlot({ data }) {
         .range([height - margin.bottom, margin.top]);
 
       const color = d3.scaleOrdinal().domain(data.map(d => d.category)).range(['#D93B63', '#01C6AC', '#01B4E4']);
-      const shape = d3.scaleOrdinal(data.map(d => d.category), d3.symbols.map(s => d3.symbol().type(s)()));
+      const shape = d3.scaleOrdinal(data.map(d => d.category), d3.symbols.map(s => d3.symbol().size(80).type(s)()));
 
       const xAxis = g => g
         .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -68,12 +69,12 @@ function ScatterPlot({ data }) {
           .style('opacity', 0.9)
           .style('display', 'block');
         // format values
-        const revenue = d3.format('$,d')(d.avgRevenue);
-        const budget = d3.format('$,d')(d.avgBudget);
-        const profit = d3.format('$,d')(d.profit);
-        tooltip.html(`${d._id} (${d.count} movies):<br />${revenue} revenue<br />${budget} budget<br />= ${profit} profit`)
+        const revenue = formatDollar(d.avgRevenue);
+        const budget = formatDollar(d.avgBudget);
+        const profit = d3.format('.1f')(d.profit / d.avgRevenue * 100);
+        tooltip.html(`<b>${d._id}</b> (${d.count} movies):<br />${revenue} revenue<br />${budget} budget<br />~ ${profit}% profit margin`)
           .style('left', (event.pageX - 70) + 'px')
-          .style('top', (event.pageY - 120) + 'px');
+          .style('top', () => { let pos = event.pageY < 800 ? 30 : -120; return (event.pageY + pos) + 'px' });
       }
 
       const tooltipMouseout = (event, d) => {
@@ -92,7 +93,7 @@ function ScatterPlot({ data }) {
             d3.selectAll(".dot." + cat)
               .transition()
               .duration(100)
-              .attr("fill", d => { console.log(d); return c });
+              .attr("fill", c);
           }
         });
       }
@@ -176,7 +177,7 @@ function ScatterPlot({ data }) {
         .attr("font-size", 10)
         .attr("fill", d => color(d))
         .attr("d", d => shape(d))
-        .attr("transform", (d, i) => `translate(${(width / 3) - 10 + i * 90}, 6)`)
+        .attr("transform", (d, i) => `translate(${(width / 3) - 10 + i * 90}, 10)`)
         .text(d => d);
       // rename labels for other departments than acting for more clarity
       const labels = [...categories];
@@ -191,7 +192,7 @@ function ScatterPlot({ data }) {
         .attr("fill", "white")
         .attr("font-size", "12px")
         .attr("x", (d, i) => (width / 3) + i * 90)
-        .attr("y", 10)
+        .attr("y", 15)
         .text(d => d);
 
       /**
