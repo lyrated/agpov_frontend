@@ -18,7 +18,7 @@ function RadialChart({ data }) {
         .innerRadius(d => d.y0 * radius)
         .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1))
 
-      let partition = data => {
+      const partition = data => {
         const root = d3.hierarchy(data)
           .sum(d => d.value)
           .sort((a, b) => b.value - a.value);
@@ -27,9 +27,10 @@ function RadialChart({ data }) {
           (root);
       }
 
-      let color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
+      // colors
+      const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
 
-      let getColor = d => {
+      const getColor = d => {
         if (d.depth === 3) {
           if (d.data.name === "Male") return "#FDC170";
           else if (d.data.name === "Female") return "#D40242";
@@ -40,21 +41,43 @@ function RadialChart({ data }) {
         return color(d.data.name);
       }
 
-      let format = d3.format(",d");
+      const format = d3.format(",d");
+      const formatPercentage = d3.format(".1f");
 
       const root = partition(data);
 
       root.each(d => d.current = d);
 
-      let tooltip = d3.select("body")
+      // tooltip
+      const tooltip = d3.select("body")
         .append("div")
         .style("position", "absolute")
-        .style("padding", "0 10px")
+        .style("padding", "0.2rem 0.5rem")
         .style("background", "#F0F0FA")
         .style("display", "block")
         .style("opacity", 0)
         .style("font-size", "14px")
         .style("color", "black");
+
+      const showTooltip = (event, d) => {
+        tooltip.transition().duration(100).delay(400)
+          .style("opacity", 0.9)
+          .style("display", "block");
+
+        let parentString = d.ancestors()[1].data.name.toLowerCase();
+        parentString = parentString === "genres" ? "all " + parentString : parentString;
+        const percentage = d.value / d.ancestors()[1].value * 100;
+        
+        tooltip.html(`<p class="small text-muted mb-1">${d.ancestors().map(d => d.data.name).reverse().join(" > ")}</p>${formatPercentage(percentage)}% of ${parentString}<br />(${format(d.value)} people)`)
+          .style("left", (event.pageX + 40) + "px")
+          .style("top", (event.pageY - 10) + "px");
+      }
+
+      const hideTooltip = () => {
+        tooltip
+          .style("opacity", 0)
+          .style("display", "none");
+      }
 
       const svg = d3.select("#genres-departments-chart").append("svg")
         .attr("viewBox", [0, 0, width, width])
@@ -72,27 +95,15 @@ function RadialChart({ data }) {
         .attr("d", d => arc(d.current))
         .on("mouseover", (event, d) => {
           if (arcVisible(d.current)) {
-            tooltip.transition().duration(100).delay(600)
-              .style("opacity", 0.9)
-              .style("display", "block");
-            tooltip.html(`${d.ancestors().map(d => d.data.name).reverse().join(" > ")}<br />${format(d.value)} people`)
-              .style("left", (event.pageX + 40) + "px")
-              .style("top", (event.pageY - 10) + "px");
-            setTimeout(() =>
-              tooltip
-                .style("opacity", 0)
-                .style("display", "none"), 4000);
+            showTooltip(event, d);
+            setTimeout(hideTooltip, 6000);
           }
         })
         .on("mouseout", (event, d) => {
-          tooltip
-            .style("opacity", 0)
-            .style("display", "none");
+          hideTooltip();
         })
-        .on("mousedown", (event, d) => {
-          tooltip
-            .style("opacity", 0)
-            .style("display", "none");
+        .on("click", (event, d) => {
+          hideTooltip();
         });
 
       path.filter(d => d.children)

@@ -54,7 +54,7 @@ function ScatterPlot({ data }) {
       const tooltip = d3.select('body')
         .append('div')
         .style('position', 'absolute')
-        .style('padding', '0 10px')
+        .style('padding', '0.2rem 0.5rem')
         .style('background', '#F0F0FA')
         .style('display', 'none')
         .style('opacity', 0)
@@ -71,7 +71,7 @@ function ScatterPlot({ data }) {
         const revenue = d3.format('$,d')(d.avgRevenue);
         const budget = d3.format('$,d')(d.avgBudget);
         const profit = d3.format('$,d')(d.profit);
-        tooltip.html(`${d._id} (${d.count} movies):<br />${revenue} revenue<br />${budget} budget<br /><br />${profit} profit`)
+        tooltip.html(`${d._id} (${d.count} movies):<br />${revenue} revenue<br />${budget} budget<br />= ${profit} profit`)
           .style('left', (event.pageX - 70) + 'px')
           .style('top', (event.pageY - 120) + 'px');
       }

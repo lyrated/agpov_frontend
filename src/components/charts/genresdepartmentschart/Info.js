@@ -10,7 +10,7 @@ function GenresDepartmentsInfo({ url }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const text = <>This chart shows the gender distribution of people working in all movie genres and departments{dataset} during the years <strong>
+  const text = <>This chart shows how many female and male people work in all movie genres and departments{dataset} during the years <strong>
     {url.time} to {url.time + 9}</strong> according to the movie credits. <Button variant="info" onClick={handleShow}>
       Click here to read more.</Button></>;
 

@@ -50,7 +50,7 @@ function ProfitChartInfo({ url }) {
           <p>For the dataset with other departments, the data was grouped by teams with "only women", "only men" and "mixed gender" (women and men).</p>
           <p>Unfortunately there was not enough data for non-binary people to show in this chart.</p>
           <h3>Additional info:</h3>
-          <p><em>Gone with the Wind (1939)</em> is the highest grossing movie of the genre "War" (among others) after adjusting the revenue for inflation. This might explain the unusual spike for War movies.</p>
+          <p><em>Gone with the Wind (1939)</em> is the highest grossing movie of the genre "War" (among others) after adjusting the revenue for inflation. This genre has relatively few movies, which might explain the unusual spike for War movies.</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
