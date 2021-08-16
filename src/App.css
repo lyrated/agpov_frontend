@@ -91,7 +91,6 @@ h2 {
   font-weight: 600;
   font-size: 1.5rem;
   color: var(--green);
-  margin-bottom: 1.5rem;
 }
 
 h3 {
@@ -151,8 +150,9 @@ button.timespan {
   border: 1px solid var(--muted);
   border-radius: 1.5rem;
   color: var(--muted);
-  padding: 0.2rem 1.2rem;
-  margin: 0.5rem 0;
+  padding: 0.2rem 1.2rem 0.3rem;
+  margin: 0.7rem 0;
+  min-width: 130px;
   transition: 0.2s;
 }
 button.timespan:hover {

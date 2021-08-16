@@ -36,7 +36,7 @@ function GenresDepartmentsSidebar({ setUrl }) {
   }
 
   return (
-    <>
+    <div class="sticky-top pt-3">
       <h3>Select data:</h3>
       <div className="form-check pb-4">
         <input type="checkbox" id="data" className="form-check-input" value="all" onChange={handleDatasetChange} />
@@ -49,7 +49,7 @@ function GenresDepartmentsSidebar({ setUrl }) {
             onClick={handleTimeChange}>{i} - {i + 9}</button>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

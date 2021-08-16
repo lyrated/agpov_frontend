@@ -61,7 +61,7 @@ function TimeChartSidebar({ setUrl }) {
   }
 
   return (
-    <>
+    <div class="sticky-top pt-3">
       <div className="pb-2">
         <h3>Select years:</h3>
         <label className="mb-0">Start</label>
@@ -104,7 +104,7 @@ function TimeChartSidebar({ setUrl }) {
 
       <button className="btn btn-primary w-100"
         onClick={handleInputChange}>Apply filters</button>
-    </>
+    </div>
   );
 }
 
