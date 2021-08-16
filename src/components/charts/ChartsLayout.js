@@ -10,9 +10,11 @@ import TimeChartInfo from './timechart/Info';
 
 import GenresDeparmentsChart from './genresdepartmentschart/GenresDepartmentsChart';
 import GenresDepartmentsInfo from './genresdepartmentschart/Info';
+import GenresDepartmentsSidebar from './genresdepartmentschart/Sidebar';
 
 import ProfitChart from './profitchart/ProfitChart';
-import GenresDepartmentsSidebar from './genresdepartmentschart/Sidebar';
+import ProfitChartSidebar from './profitchart/Sidebar';
+import ProfitChartInfo from './profitchart/Info';
 
 function ChartsLayout() {
   const [timeUrl, setTimeUrl] = useState({
@@ -28,32 +30,35 @@ function ChartsLayout() {
     time: 2010
   });
 
-  // const [profitUrl, setProfitUrl] = useState({});
+  const [profitUrl, setProfitUrl] = useState({
+    dataset: 'acting'
+  });
 
   return (
     <div className="row">
       <div className="col">
         <section id="sidebar">
+          <h2>Filters</h2>
           <Router>
             <Route path="/time" render={() => <TimeChartSidebar setUrl={setTimeUrl} />} />
             <Route path="/genres" render={() => <GenresDepartmentsSidebar setUrl={setGdUrl} />} />
-            {/* <Route path="/profit" component={ProfitChart} /> */}
+            <Route path="/profit" render={() => <ProfitChartSidebar setUrl={setProfitUrl} />} />
           </Router>
         </section>
       </div>
 
-      <div className="col-12 col-xl-9 order-xl-first">
+      <div className="col-12 col-lg-9 order-lg-first">
         <section id="charts">
           <Router>
             <Route path="/time" render={() => <TimeChartInfo url={timeUrl} />} />
             <Route path="/genres" render={() => <GenresDepartmentsInfo url={gdUrl} />} />
-            {/* <Route path="/profit" component={ProfitChart} /> */}
+            <Route path="/profit" render={() => <ProfitChartInfo url={profitUrl} />} />
           </Router>
 
           <Router>
             <Route path="/time" render={() => <TimeChart url={timeUrl} />} />
             <Route path="/genres" render={() => <GenresDeparmentsChart url={gdUrl} />} />
-            <Route path="/profit" component={ProfitChart} />
+            <Route path="/profit" render={() => <ProfitChart url={profitUrl} />} />
           </Router>
         </section>
       </div>
