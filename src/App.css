@@ -187,3 +187,8 @@ button.timespan.active {
   max-width: 850px;
   margin: auto;
 }
+
+#home {
+  padding: 3rem 4rem;
+  text-align: justify;
+}
