@@ -51,10 +51,8 @@ function TimeChartSidebar({ setUrl }) {
 
   // select options
   const yearsOptions = [];
-  for (let i = START; i <= END; i++) {
-    if (i % 5 === 0) {
-      yearsOptions.push(<option key={i}>{i}</option>);
-    }
+  for (let i = START; i <= END; i += 5) {
+    yearsOptions.push(<option key={i}>{i}</option>);
   }
 
   const genresOptions = [];
