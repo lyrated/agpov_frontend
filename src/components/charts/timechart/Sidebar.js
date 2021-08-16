@@ -2,8 +2,8 @@ import { React, useState, useCallback } from 'react';
 
 function TimeChartSidebar({ setUrl }) {
   // constants
-  const START = 1912,
-    END = 2021,
+  const START = 1915,
+    END = 2020,
     GENRES = {
       all: 'All', action: 'Action', adventure: 'Adventure',
       animation: 'Animation', comedy: 'Comedy',
@@ -52,7 +52,9 @@ function TimeChartSidebar({ setUrl }) {
   // select options
   const yearsOptions = [];
   for (let i = START; i <= END; i++) {
-    yearsOptions.push(<option key={i}>{i}</option>);
+    if (i % 5 === 0) {
+      yearsOptions.push(<option key={i}>{i}</option>);
+    }
   }
 
   const genresOptions = [];
