@@ -152,7 +152,7 @@ button.timespan {
   color: var(--muted);
   padding: 0.2rem 1.2rem 0.3rem;
   margin: 0.7rem 0;
-  min-width: 130px;
+  min-width: 65%;
   transition: 0.2s;
 }
 button.timespan:hover {

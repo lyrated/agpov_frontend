@@ -5,10 +5,10 @@ function ProfitChartSidebar({ setUrl }) {
   const DEFAULT_DATA = 'acting';
 
   const depsOptions = {
-    acting: 'Lead Actor',
-    directing: 'Directing',
-    production: 'Production',
-    writing: 'Writing'
+    acting: 'Lead actor',
+    directing: 'Director teams',
+    production: 'Production teams',
+    writing: 'Writer teams'
   }
 
   // hooks
@@ -29,7 +29,7 @@ function ProfitChartSidebar({ setUrl }) {
 
   return (
     <div className="sticky-top pt-3">
-      <h3>Select data:</h3>
+      <h3>Select data grouping:</h3>
       {Object.keys(depsOptions).map(i => (
         <button className={'timespan' + (isActive(i) ? ' active' : '')} key={i} id={i}
           onClick={handleDatasetChange}>{depsOptions[i]}</button>

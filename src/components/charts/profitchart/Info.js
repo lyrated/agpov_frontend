@@ -20,14 +20,14 @@ function ProfitChartInfo({ url }) {
       data = 'writer teams';
       break;
     case 'production':
-      data = 'producer teams';
+      data = 'production teams';
       break;
     default:
       data = url.dataset;
   }
 
-  const text = <>This chart shows the average budget and revenue <strong>(adjusted for inflation)</strong> of each movie genre with <strong>
-    {data} grouped by gender</strong>. Hover over each point to get more information. <Button
+  const text = <>This chart shows the average budget and revenue <strong>(adjusted for inflation)</strong> of movies grouped by the <strong>
+    {data}' gender</strong>. Each point represents one genre and you can hover over them for more information. <Button
       variant="info" onClick={handleShow}>Click here to read more.</Button></>;
 
   return (
