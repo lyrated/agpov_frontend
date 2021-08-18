@@ -147,6 +147,17 @@ function BarChart({ data }) {
           return i * 5
         });
 
+      // if data is empty:
+      if (data.length === 0) {
+        svg.append('text')
+          .attr('x', width / 2 + margin.right)
+          .attr('y', height / 2 + margin.top)
+          .attr('text-anchor', 'middle')
+          .attr('fill', 'white')
+          .style('font-size', '16px')
+          .text('This result contains no data. Please change your filters.');
+      }
+
       /**
        * Zoomable Bar Chart Code from https://observablehq.com/@d3/zoomable-bar-chart
        */
