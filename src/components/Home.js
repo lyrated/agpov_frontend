@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import img from './img_home01.jpg'
 
 function Home() {
@@ -18,7 +19,7 @@ function Home() {
             <li><em>How much money is involved when women work on movies?</em></li>
           </ul>
           <div className="pb-3 text-center">
-            <a href="/time" className="btn btn-primary px-3" role="button">Go to the first chart</a>
+            <NavLink to="/time" className="btn btn-primary px-3" role="button">Go to the first chart</NavLink>
           </div>
           <p>
             If you find any technical errors, please contact me with screenshots included! You can reach me via <a href="mailto:Mai-Ly.Nguyen@Student.HTW-Berlin.de" target="_blank" rel="noopener noreferrer">e-mail</a> or on Discord at <strong>miyla#1024</strong>.
