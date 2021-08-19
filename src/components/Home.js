@@ -6,12 +6,11 @@ function Home() {
     <div className="row py-3">
       <div className="col-12 col-xl-6">
         <section id="home">
-          <h2 className="text-center mb-3">Women in the movie industry</h2>
           <p>
             Welcome to my final thesis project! I hope you will like it here :)
           </p>
           <p>
-            My topic for the thesis is <strong>data visualization</strong>. I chose the database <a href="https://tmdb.org/" target="_blank" rel="noopener noreferrer">TMDb.org</a> to make charts about the <strong>gender distribution</strong> in the movie industry with the help of the D3.js library. Precisely, I want to find out:
+            My topic for the thesis is <strong>data visualization</strong>. I chose the database <a href="https://tmdb.org/" target="_blank" rel="noopener noreferrer">TMDb.org</a> with over 554K movies listed to make charts about the <strong>gender distribution</strong> in the movie industry with the help of the D3.js library. Precisely, I want to find out:
           </p>
           <ul>
             <li><em>How has the share of women changed over the years?</em></li>

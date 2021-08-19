@@ -36,7 +36,7 @@ function TimeChartInfo({ url }) {
           <p>This chart is based on credits of movies from many different countries which were taken from the TMDb.org database.</p>
           <p>Not all movies had the full cast and crew listed.</p>
           <p>The movies were grouped into <strong>years</strong> according to their release date. The chart excluded movies without release date.</p>
-          <p>It also only considers people who were marked with the gender <strong>female or male</strong>.</p>
+          <p>It also <u>only</u> considers people who were marked with the gender <strong>female or male</strong>.</p>
           <p>The numbers were calculated by counting all people listed as women, and dividing it by the sum of all female and male people.</p>
           <p>Roughly <strong>36%</strong> of the credited people did not have any gender listed or were non-binary.</p>
           <p>Unfortunately, non-binary people could not be included in this analysis as there was not enough data.</p>
