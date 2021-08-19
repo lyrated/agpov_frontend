@@ -18,8 +18,8 @@ import ProfitChartInfo from './profitchart/Info';
 
 function ChartsLayout() {
   const [timeUrl, setTimeUrl] = useState({
-    start: 1912,
-    end: 2021,
+    start: 1920,
+    end: 2020,
     genre: 'all',
     dep: 'all',
     category: 'none'
