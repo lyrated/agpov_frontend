@@ -13,7 +13,7 @@ function GenresDeparmentsChart({ url }) {
     Object.keys(url).forEach(u => {
       urlString += '&' + u + '=' + url[u];
     });
-    fetch('http://localhost:9000/api/genres-departments?size=10000' + urlString)
+    fetch('/api/genres-departments?size=10000' + urlString)
       .then(res => res.json())
       .then(setData)
       .then(() => setLoading(false))

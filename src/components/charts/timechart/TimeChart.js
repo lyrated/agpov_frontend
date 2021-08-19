@@ -13,7 +13,7 @@ function TimeChart({ url }) {
     Object.keys(url).forEach(u => {
       urlString += '&' + u + '=' + url[u];
     });
-    fetch('http://localhost:9000/api/time?size=1000&' + urlString)
+    fetch('/api/time?size=1000&' + urlString)
       .then(res => res.json())
       .then(setData)
       .then(() => setLoading(false))

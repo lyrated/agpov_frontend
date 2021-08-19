@@ -12,7 +12,7 @@ function ProfitChart({ url }) {
     Object.keys(url).forEach(u => {
       urlString += '&' + u + '=' + url[u];
     });
-    fetch('http://localhost:9000/api/profit?size=55000' + urlString)
+    fetch('/api/profit?size=55000' + urlString)
       .then(res => res.json())
       .then(setData)
       .then(() => setLoading(false))
