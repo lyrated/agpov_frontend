@@ -96,7 +96,7 @@ function RadialChart({ data }) {
         .on("mouseover", (event, d) => {
           if (arcVisible(d.current)) {
             showTooltip(event, d);
-            setTimeout(hideTooltip, 8000);
+            setTimeout(hideTooltip, 10000);
           }
         })
         .on("mouseout", (event, d) => {

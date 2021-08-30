@@ -11,7 +11,7 @@ function BarChart({ data }) {
       let x = d3.scaleBand()
         .domain(data.map(d => d.x))
         .range([0, width])
-        .padding(0.1);
+        .padding(0.05);
 
       let y = d3.scaleLinear()
         .domain([0, 50])
@@ -20,16 +20,21 @@ function BarChart({ data }) {
         .domain([0, 50])
         .rangeRound([height, 0]);
 
+      const MIN_COLOR = d3.schemePuRd[5][0];
+      const MAX_COLOR = d3.schemePuRd[5][4];
       let colors = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.y)])
-        .range(['#01B4E4', '#D40242']);
+        .domain([d3.min(data, d => d.y), d3.max(data, d => d.y)])
+        .range([MIN_COLOR, MAX_COLOR]);
 
       let xAxis = g => g
         .attr('transform', `translate(${margin.left},${height + margin.top})`)
         .call(d3.axisBottom(x)
           .tickValues(x.domain().filter(function (d, i) {
+            if (data.length <= 30) return d;
+            if (data.length <= 50) return !(i % 2);
             return !(i % 5);
-          })));
+          }))
+          .tickSizeOuter(0));
 
       let yAxis = g => g
         .attr('transform', `translate(${margin.left},${margin.top})`)
@@ -112,31 +117,32 @@ function BarChart({ data }) {
         .attr('id', 'bg-gradient');
       bgGradient
         .append('stop')
-        .attr('stop-color', '#01B4E4')
+        .attr('stop-color', MIN_COLOR)
         .attr('offset', '0%');
       bgGradient
         .append('stop')
-        .attr('stop-color', '#D40242')
+        .attr('stop-color', MAX_COLOR)
         .attr('offset', '100%');
 
       svg.append('text')
         .attr('x', width / 4 * 3)
         .attr('y', 30)
         .attr('fill', 'white')
+        .attr('text-anchor', 'end')
         .style('font-size', '12px')
-        .text('0%');
+        .text(d3.format(".1f")(d3.min(data, d => d.y)) + '%');
       svg.append('rect')
-        .attr('x', width / 4 * 3 + 30)
+        .attr('x', width / 4 * 3 + 10)
         .attr('y', 20)
         .attr('width', 200)
         .attr('height', 10)
         .style('fill', 'url(#bg-gradient)');
       svg.append('text')
-        .attr('x', width / 4 * 3 + 240)
+        .attr('x', width / 4 * 3 + 220)
         .attr('y', 30)
         .attr('fill', 'white')
         .style('font-size', '12px')
-        .text(d3.max(data, d => d.y) + '%');
+        .text(d3.format(".1f")(d3.max(data, d => d.y)) + '%');
 
       // animation
       chart.transition()

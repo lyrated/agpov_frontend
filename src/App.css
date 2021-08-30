@@ -11,7 +11,7 @@
   --white: #F0F0FA;
   --muted: #D2D2DC;
   --background: #021322;
-  --background--light: #011a2e;
+  --background--light: #001629;
 }
 
 body {
@@ -93,13 +93,13 @@ footer p {
 h2 {
   font-weight: 600;
   font-size: 1.5rem;
-  color: var(--blue);
+  color: var(--blue-light);
 }
 
 h3 {
   font-weight: bold;
   font-size: 1.1rem;
-  color: var(--green-light);
+  color: var(--green);
 }
 
 section {
@@ -136,7 +136,7 @@ section {
 }
 
 strong {
-  color: var(--orange-light);
+  color: var(--green-light);
 }
 
 .infobox {
@@ -178,6 +178,8 @@ button.timespan.active {
 
 #sidebar {
   height: calc(100% - 3rem);
+  border-left: 1px solid var(--muted);
+  padding-left: 2rem !important;
 }
 
 #charts .diagram {

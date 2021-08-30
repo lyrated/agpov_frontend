@@ -21,28 +21,29 @@ function TimeChartSidebar({ setUrl }) {
   const [end, setEnd] = useState(END);
   const [genre, setGenre] = useState('all');
   const [dep, setDep] = useState('all');
-  const [cat, setCat] = useState('none');
-  const [selected, setSelected] = useState('none');
+  // const [cat, setCat] = useState('none');
+  // const [selected, setSelected] = useState('none');
+  const cat = 'none';
 
-  const handleCatChange = e => {
-    setCat(e.target.value);
-    setSelected(e.target.value);
-  }
+  // const handleCatChange = e => {
+  //   setCat(e.target.value);
+  //   setSelected(e.target.value);
+  // }
 
   const handleGenreChange = e => {
     setGenre(e.target.value);
-    if (e.target.value !== 'all') {
-      setSelected('none');
-      setCat('none');
-    }
+    // if (e.target.value !== 'all') {
+    //   setSelected('none');
+    //   setCat('none');
+    // }
   }
 
   const handleDepChange = e => {
     setDep(e.target.value);
-    if (e.target.value !== 'all') {
-      setSelected('none');
-      setCat('none');
-    }
+    // if (e.target.value !== 'all') {
+    //   setSelected('none');
+    //   setCat('none');
+    // }
   }
 
   const handleInputChange = useCallback(e => {
@@ -61,7 +62,7 @@ function TimeChartSidebar({ setUrl }) {
   }
 
   return (
-    <div class="sticky-top pt-3">
+    <div className="sticky-top pt-3">
       <div className="pb-2">
         <h3>Select years:</h3>
         <label className="mb-0">Start</label>
@@ -92,7 +93,7 @@ function TimeChartSidebar({ setUrl }) {
         </select>
       </div>
 
-      <div className="pt-2">
+      {/* <div className="pt-2">
         <h3>Divide into categories:</h3>
         <select className="custom-select" value={selected} name="cat" onChange={handleCatChange}>
           <option value="none">None</option>
@@ -100,9 +101,9 @@ function TimeChartSidebar({ setUrl }) {
           <option value="departments" disabled={genre !== 'all' || dep !== 'all'}>Departments</option>
         </select>
         <p className="small">Category can only be selected if 'All' is selected in above filters.</p>
-      </div>
+      </div> */}
 
-      <button className="btn btn-primary w-100"
+      <button className="btn btn-primary w-100 mt-2"
         onClick={handleInputChange}>Apply filters</button>
     </div>
   );
