@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 function Header() {
   return (
     <header className="row m-0">
-      <div className="col-12 col-lg-6 p-0">
+      <div className="col-12 col-xl-6 p-0">
         <a href="/"><h1>A gendered point of view</h1></a>
         <p className="subtitle">Visualizing gender distribution in the movie industry</p>
       </div>
@@ -12,7 +12,7 @@ function Header() {
       {/* Navigation */}
       <div className="col p-0">
         <nav className="navbar navbar-expand-md px-0">
-          <ul className="navbar-nav ml-0 ml-md-auto">
+          <ul className="navbar-nav mx-auto ml-md-auto">
             <li className="nav-item">
               <NavLink exact to="/" activeClassName="active" className="nav-link">Home</NavLink>
             </li>

@@ -3,20 +3,21 @@
   --pink-light: #D93B63;
   --orange: #D27701;
   --orange-light: #FDC170;
-  --green: #01C6AC;
+  --green: #00B199;
   --green-light: #90CEA1;
   --blue: #0177D2;
   --blue-light: #01B4E4;
 
   --white: #F0F0FA;
   --muted: #D2D2DC;
-  --background: #032541;
-  --background--light: #022A4B;
+  --background: #021322;
+  --background--light: #011a2e;
 }
 
 body {
-  background-color: var(--background);
+  background-color: var(--background--light);
   color: var(--white);
+  overflow-x: hidden;
 }
 
 a {
@@ -28,14 +29,9 @@ a:hover, a:focus, a:active {
   text-decoration: none;
 }
 
-.App {
-  padding: 2rem 5rem;
-}
-
-@media (max-width: 768px) {
-  .App {
-    padding: 1.5rem;
-  }
+header {
+  background-color: var(--background);
+  padding: 1rem 2rem 0.5rem;
 }
 
 header h1 {
@@ -44,7 +40,7 @@ header h1 {
   font-weight: bold;
   margin-bottom: 0;
   color: transparent;
-  background: linear-gradient(to right, var(--pink-light) 0%, var(--orange) 100%);
+  background: linear-gradient(to right, var(--green) 0%, var(--blue-light) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -69,28 +65,35 @@ header .navbar .navbar-nav .nav-item a.nav-link {
 }
 
 header .navbar .navbar-nav .nav-item a.nav-link.active {
-  color: var(--green);
+  color: var(--pink);
   pointer-events: none;
   outline: none;
 }
 
 header .navbar .navbar-nav .nav-item a.nav-link:hover {
-  color: var(--green-light);
+  color: var(--pink-light);
+}
+
+main {
+  margin: auto !important;
+  max-width: 1600px;
+  padding: 1rem 6rem;
 }
 
 footer {
-  padding-top: 3rem;
+  padding: 3rem 2rem 1rem;
 }
 
 footer p {
   color: var(--muted);
-  text-align: right;
+  font-size: small;
+  text-align: center;
 }
 
 h2 {
   font-weight: 600;
   font-size: 1.5rem;
-  color: var(--green);
+  color: var(--blue);
 }
 
 h3 {
@@ -100,20 +103,18 @@ h3 {
 }
 
 section {
-  background-color: var(--background--light);
-  border-radius: 10px;
-  padding: 1.5rem;
+  padding: 0 1rem !important;
   margin: 1.5rem 0;
 }
 
 .btn.btn-primary {
-  background-color: var(--pink);
+  background: linear-gradient(to right, var(--green) 0%, var(--blue-light) 100%);
   border: none;
   transition: 0.5s;
 }
 
 .btn.btn-primary:hover, .btn.btn-primary:focus, .btn.btn-primary:active {
-  background-color: var(--pink-light);
+  background: linear-gradient(to right, var(--green) 0%, var(--green) 100%);
 }
 
 .btn.btn-info {
@@ -190,7 +191,36 @@ button.timespan.active {
 
 #home {
   padding: 2.5rem 3.5rem;
-  margin-top: 1.5rem;
-  margin-right: 2rem;
   text-align: justify;
+}
+
+#home .title {
+  background: linear-gradient(to bottom right, var(--blue-light) 0%, var(--pink-light) 100%);
+  max-width: 600px;
+}
+
+#home h2 {
+  font-size: 7.5rem;
+  font-weight: bold;
+  padding: 0 3rem 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#home .welcome {
+  max-width: 650px;
+  padding: 1rem 3rem;
+}
+
+@media (max-width: 768px) {
+  #home .title {
+    max-width: 100%;
+  }
+
+  #home h2 {
+    font-size: 3rem;
+  }
+
+  main {
+    padding: 1rem !important;
+  }
 }

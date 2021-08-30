@@ -35,7 +35,7 @@ function ChartsLayout() {
   });
 
   return (
-    <div className="row">
+    <main className="row">
       <div className="col">
         <section id="sidebar">
           <h2>Filters</h2>
@@ -62,7 +62,7 @@ function ChartsLayout() {
           </Router>
         </section>
       </div>
-    </div>
+    </main>
   );
 }
 
