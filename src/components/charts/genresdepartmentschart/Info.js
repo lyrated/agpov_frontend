@@ -11,7 +11,7 @@ function GenresDepartmentsInfo({ url }) {
   const handleShow = () => setShow(true);
 
   const text = <>This chart shows how many female and male people work in all movie genres and departments{dataset} during the years <strong>
-    {url.time} to {url.time + 9}</strong> according to the movie credits. <Button variant="info" onClick={handleShow}>
+    {url.time} to {+url.time + 9}</strong> according to the movie credits. <Button variant="info" onClick={handleShow}>
       Click here to read more.</Button></>;
 
   return (

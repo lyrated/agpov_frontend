@@ -38,7 +38,7 @@ function ScatterPlot({ data }) {
           .attr("y", margin.bottom - 4)
           .attr("fill", "#FDC170")
           .attr("text-anchor", "end")
-          .text("Average budget in million constant USD"));
+          .text("Avg. budget in million USD (inflation accounted)"));
 
       const yAxis = g => g
         .attr("transform", `translate(${margin.left},0)`)
@@ -49,7 +49,7 @@ function ScatterPlot({ data }) {
           .attr("y", 10)
           .attr("fill", "#FDC170")
           .attr("text-anchor", "start")
-          .text("Average revenue in million constant USD"));
+          .text("Avg. revenue in million USD (inflation accounted)"));
 
       // tooltip
       const tooltip = d3.select('body')
@@ -183,7 +183,7 @@ function ScatterPlot({ data }) {
       if (labels.length === 3) {
         labels[0] = 'only women';
         labels[1] = 'only men';
-        labels[2] = 'mixed genders';
+        labels[2] = 'mixed gender team';
       }
       svg.selectAll("legend")
         .data(labels)

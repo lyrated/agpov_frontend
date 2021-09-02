@@ -132,7 +132,7 @@ section {
 }
 
 .text-info {
-  color: var(--pink-light) !important;
+  color: var(--orange-light) !important;
 }
 
 strong {
@@ -140,7 +140,7 @@ strong {
 }
 
 .infobox {
-  border: 1px solid var(--pink-light);
+  border: 1px solid var(--orange-light);
   border-radius: 0.5rem;
   padding: 1rem 0.8rem;
 }
