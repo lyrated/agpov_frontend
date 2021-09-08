@@ -12,9 +12,9 @@ import GenresDeparmentsChart from './genresdepartmentschart/GenresDepartmentsCha
 import GenresDepartmentsInfo from './genresdepartmentschart/Info';
 import GenresDepartmentsSidebar from './genresdepartmentschart/Sidebar';
 
-import ProfitChart from './profitchart/ProfitChart';
-import ProfitChartSidebar from './profitchart/Sidebar';
-import ProfitChartInfo from './profitchart/Info';
+import ProfitChart from './budgetrevenuechart/BudgetRevenueChart';
+import ProfitChartSidebar from './budgetrevenuechart/Sidebar';
+import ProfitChartInfo from './budgetrevenuechart/Info';
 
 function ChartsLayout() {
   const [timeUrl, setTimeUrl] = useState({
